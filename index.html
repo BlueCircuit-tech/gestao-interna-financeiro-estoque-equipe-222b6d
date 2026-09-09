@@ -2711,6 +2711,416 @@ if (document.querySelector('[data-tela="painel"]')) painel_init();
       </script>
     </section>
 
+    <section data-tela="painel-admin" class="hidden">
+      <div class="animate-fade-in">
+        <!-- Header -->
+        <div class="mb-5">
+          <h1 class="font-display text-xl font-bold text-white">Painel Administrativo</h1>
+          <p class="text-slate-400 text-sm mt-1">Visão gerencial da equipe · <span id="admin-data-hoje"></span></p>
+        </div>
+
+        <!-- Filtros -->
+        <div class="bg-white rounded-2xl p-3 mb-4 shadow-sm">
+          <div class="flex gap-2 mb-3">
+            <select id="admin-filtro-equipe" onchange="painel_admin_aplicarFiltros()" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-marca-500 appearance-none" style="background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%2264748b%22 stroke-width=%222%22><polyline points=%226 9 12 15 18 9%22/></svg>');background-repeat:no-repeat;background-position:right 12px center;">
+              <option value="todas">Todas as equipes</option>
+              <option value="norte">Equipe Norte</option>
+              <option value="sul">Equipe Sul</option>
+              <option value="leste">Equipe Leste</option>
+              <option value="oeste">Equipe Oeste</option>
+            </select>
+            <select id="admin-filtro-periodo" onchange="painel_admin_aplicarFiltros()" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-marca-500 appearance-none" style="background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%2264748b%22 stroke-width=%222%22><polyline points=%226 9 12 15 18 9%22/></svg>');background-repeat:no-repeat;background-position:right 12px center;">
+              <option value="mes">Este mês</option>
+              <option value="15dias">Últimos 15 dias</option>
+              <option value="7dias">Últimos 7 dias</option>
+              <option value="hoje">Hoje</option>
+            </select>
+          </div>
+          <div class="flex gap-2">
+            <button onclick="mostrarTela('relatorios')" class="flex-1 bg-marca-50 text-marca-700 rounded-xl py-2.5 text-sm font-semibold active:scale-95 transition-all flex items-center justify-center gap-1.5">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Exportar Relatório
+            </button>
+            <button onclick="painel_admin_abrirAddUsuario()" class="flex-1 bg-marca-600 text-white rounded-xl py-2.5 text-sm font-semibold active:scale-95 transition-all flex items-center justify-center gap-1.5">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+              Adicionar Usuário
+            </button>
+            <button onclick="painel_admin_abrirPermissoes()" class="flex-1 bg-slate-100 text-slate-700 rounded-xl py-2.5 text-sm font-semibold active:scale-95 transition-all flex items-center justify-center gap-1.5">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              Permissões
+            </button>
+          </div>
+        </div>
+
+        <!-- KPIs -->
+        <div class="grid grid-cols-2 gap-3 mb-4">
+          <div class="bg-gradient-to-br from-marca-700 to-marca-900 rounded-2xl p-4 text-white shadow-lg">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-medium text-marca-200 uppercase tracking-wider">Faturamento</span>
+              <div class="w-8 h-8 bg-white/15 rounded-lg flex items-center justify-center">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              </div>
+            </div>
+            <p class="font-display text-2xl font-bold">R$ 48.650</p>
+            <div class="flex items-center gap-1 mt-1.5">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+              <span class="text-xs text-green-300 font-medium">+12.5% vs mês anterior</span>
+            </div>
+          </div>
+          <div class="bg-gradient-to-br from-marca-700 to-marca-900 rounded-2xl p-4 text-white shadow-lg">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-medium text-marca-200 uppercase tracking-wider">Total Rotas</span>
+              <div class="w-8 h-8 bg-white/15 rounded-lg flex items-center justify-center">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+              </div>
+            </div>
+            <p class="font-display text-2xl font-bold">147</p>
+            <div class="flex items-center gap-1 mt-1.5">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+              <span class="text-xs text-green-300 font-medium">+8.3% vs mês anterior</span>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">Inadimplência</span>
+              <div class="w-8 h-8 bg-red-50 rounded-lg flex items-center justify-center">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+              </div>
+            </div>
+            <p class="font-display text-2xl font-bold text-slate-800">3.2%</p>
+            <div class="flex items-center gap-1 mt-1.5">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>
+              <span class="text-xs text-green-600 font-medium">-1.8% vs mês anterior</span>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">Membros Ativos</span>
+              <div class="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+            </div>
+            <p class="font-display text-2xl font-bold text-slate-800">12</p>
+            <p class="text-xs text-slate-400 mt-1.5">10 ativos · 2 em rota</p>
+          </div>
+        </div>
+
+        <!-- Gráficos -->
+        <div class="grid grid-cols-2 gap-3 mb-4">
+          <!-- Donut: Forma de Pagamento -->
+          <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
+            <h3 class="font-display text-sm font-bold text-slate-800 mb-3">Pagamentos</h3>
+            <div class="flex flex-col items-center">
+              <svg width="120" height="120" viewBox="0 0 120 120" class="mb-2">
+                <circle cx="60" cy="60" r="45" fill="none" stroke="#e2e8f0" stroke-width="18"/>
+                <circle cx="60" cy="60" r="45" fill="none" stroke="#1E3A5F" stroke-width="18" stroke-dasharray="141.37 283.53" stroke-dashoffset="0" transform="rotate(-90 60 60)" stroke-linecap="round"/>
+                <circle cx="60" cy="60" r="45" fill="none" stroke="#2563EB" stroke-width="18" stroke-dasharray="85.36 283.53" stroke-dashoffset="-141.37" transform="rotate(-90 60 60)" stroke-linecap="round"/>
+                <circle cx="60" cy="60" r="45" fill="none" stroke="#f59e0b" stroke-width="18" stroke-dasharray="56.71 283.53" stroke-dashoffset="-226.73" transform="rotate(-90 60 60)" stroke-linecap="round"/>
+                <circle cx="60" cy="60" r="25" fill="white"/>
+                <text x="60" y="57" text-anchor="middle" class="text-xs fill-slate-500">Total</text>
+                <text x="60" y="71" text-anchor="middle" class="text-sm font-bold fill-slate-800">147</text>
+              </svg>
+              <div class="w-full space-y-1.5">
+                <div class="flex items-center justify-between text-xs"><div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-marca-800"></span><span class="text-slate-600">Dinheiro</span></div><span class="font-semibold text-slate-800">50%</span></div>
+                <div class="flex items-center justify-between text-xs"><div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-marca-500"></span><span class="text-slate-600">PIX</span></div><span class="font-semibold text-slate-800">30%</span></div>
+                <div class="flex items-center justify-between text-xs"><div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span><span class="text-slate-600">Misto</span></div><span class="font-semibold text-slate-800">20%</span></div>
+              </div>
+            </div>
+          </div>
+          <!-- Desempenho Mensal -->
+          <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
+            <h3 class="font-display text-sm font-bold text-slate-800 mb-3">Faturamento Mensal</h3>
+            <svg width="100%" height="100" viewBox="0 0 200 100" preserveAspectRatio="none" class="overflow-visible">
+              <polyline points="0,80 28,65 57,70 85,45 114,55 142,30 171,25 200,15" fill="none" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="0,80 28,65 57,70 85,45 114,55 142,30 171,25 200,15 200,100 0,100" fill="url(#chartGrad)" stroke="none" opacity="0.15"/>
+              <defs><linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2563EB"/><stop offset="100%" stop-color="#2563EB" stop-opacity="0"/></linearGradient></defs>
+              <circle cx="200" cy="15" r="4" fill="#2563EB" stroke="white" stroke-width="2"/>
+            </svg>
+            <div class="flex justify-between mt-2">
+              <span class="text-[10px] text-slate-400">Jan</span>
+              <span class="text-[10px] text-slate-400">Fev</span>
+              <span class="text-[10px] text-slate-400">Mar</span>
+              <span class="text-[10px] text-slate-400">Abr</span>
+              <span class="text-[10px] text-slate-400">Mai</span>
+              <span class="text-[10px] text-slate-400">Jun</span>
+              <span class="text-[10px] text-slate-400 font-bold text-marca-600">Jul</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ranking Vendedores -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 mb-4 overflow-hidden">
+          <div class="p-4 pb-2">
+            <div class="flex items-center justify-between">
+              <h3 class="font-display text-sm font-bold text-slate-800">Ranking de Vendedores</h3>
+              <span class="text-xs text-slate-400">Este mês</span>
+            </div>
+          </div>
+          <div id="admin-ranking-list">
+            <div class="px-4 py-3 flex items-center gap-3 border-t border-slate-50 cursor-pointer active:bg-slate-50 transition-colors" onclick="painel_admin_detalheVendedor(0)">
+              <div class="w-7 h-7 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-700 text-xs font-bold shrink-0">1º</div>
+              <div class="w-9 h-9 rounded-full bg-gradient-to-br from-marca-500 to-marca-700 flex items-center justify-center text-white text-sm font-bold shrink-0">RC</div>
+              <div class="flex-1 min-w-0"><p class="text-sm font-semibold text-slate-800 truncate">Ricardo Costa</p><p class="text-xs text-slate-400">32 rotas</p></div>
+              <div class="text-right"><p class="text-sm font-bold text-marca-700">R$ 14.200</p><p class="text-xs text-green-600">+18%</p></div>
+            </div>
+            <div class="px-4 py-3 flex items-center gap-3 border-t border-slate-50 cursor-pointer active:bg-slate-50 transition-colors" onclick="painel_admin_detalheVendedor(1)">
+              <div class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 text-xs font-bold shrink-0">2º</div>
+              <div class="w-9 h-9 rounded-full bg-gradient-to-br from-pink-400 to-rose-600 flex items-center justify-center text-white text-sm font-bold shrink-0">AM</div>
+              <div class="flex-1 min-w-0"><p class="text-sm font-semibold text-slate-800 truncate">Ana Marques</p><p class="text-xs text-slate-400">28 rotas</p></div>
+              <div class="text-right"><p class="text-sm font-bold text-marca-700">R$ 11.850</p><p class="text-xs text-green-600">+12%</p></div>
+            </div>
+            <div class="px-4 py-3 flex items-center gap-3 border-t border-slate-50 cursor-pointer active:bg-slate-50 transition-colors" onclick="painel_admin_detalheVendedor(2)">
+              <div class="w-7 h-7 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 text-xs font-bold shrink-0">3º</div>
+              <div class="w-9 h-9 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white text-sm font-bold shrink-0">PF</div>
+              <div class="flex-1 min-w-0"><p class="text-sm font-semibold text-slate-800 truncate">Paulo Ferreira</p><p class="text-xs text-slate-400">25 rotas</p></div>
+              <div class="text-right"><p class="text-sm font-bold text-marca-700">R$ 10.400</p><p class="text-xs text-green-600">+7%</p></div>
+            </div>
+            <div class="px-4 py-3 flex items-center gap-3 border-t border-slate-50 cursor-pointer active:bg-slate-50 transition-colors" onclick="painel_admin_detalheVendedor(3)">
+              <div class="w-7 h-7 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 text-xs font-bold shrink-0">4º</div>
+              <div class="w-9 h-9 rounded-full bg-gradient-to-br from-teal-400 to-cyan-600 flex items-center justify-center text-white text-sm font-bold shrink-0">JS</div>
+              <div class="flex-1 min-w-0"><p class="text-sm font-semibold text-slate-800 truncate">Juliana Santos</p><p class="text-xs text-slate-400">22 rotas</p></div>
+              <div class="text-right"><p class="text-sm font-bold text-slate-700">R$ 8.900</p><p class="text-xs text-slate-400">+3%</p></div>
+            </div>
+            <div class="px-4 py-3 flex items-center gap-3 border-t border-slate-50 cursor-pointer active:bg-slate-50 transition-colors" onclick="painel_admin_detalheVendedor(4)">
+              <div class="w-7 h-7 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 text-xs font-bold shrink-0">5º</div>
+              <div class="w-9 h-9 rounded-full bg-gradient-to-br from-violet-400 to-indigo-600 flex items-center justify-center text-white text-sm font-bold shrink-0">ML</div>
+              <div class="flex-1 min-w-0"><p class="text-sm font-semibold text-slate-800 truncate">Marcos Lima</p><p class="text-xs text-slate-400">20 rotas</p></div>
+              <div class="text-right"><p class="text-sm font-bold text-slate-700">R$ 7.600</p><p class="text-xs text-red-500">-2%</p></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rotas do Dia -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 mb-4 overflow-hidden">
+          <div class="p-4 pb-3 flex items-center justify-between">
+            <h3 class="font-display text-sm font-bold text-slate-800">Rotas de Hoje</h3>
+            <div class="flex gap-1.5">
+              <span class="badge badge-success">2 finalizadas</span>
+              <span class="badge badge-warning">1 em andamento</span>
+              <span class="badge badge-muted">1 pendente</span>
+            </div>
+          </div>
+          <div id="admin-rotas-list">
+            <div class="px-4 py-3 border-t border-slate-50 cursor-pointer active:bg-slate-50 transition-colors" onclick="painel_admin_detalheRota(0)">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center shrink-0">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="flex-1 min-w-0"><div class="flex items-center gap-2"><p class="text-sm font-semibold text-slate-800">Rota Norte - Manhã</p><span class="badge badge-success">Finalizada</span></div><p class="text-xs text-slate-400 mt-0.5">Ana Marques · 12 clientes · R$ 2.840</p></div>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+            </div>
+            <div class="px-4 py-3 border-t border-slate-50 cursor-pointer active:bg-slate-50 transition-colors" onclick="painel_admin_detalheRota(1)">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center shrink-0">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <div class="flex-1 min-w-0"><div class="flex items-center gap-2"><p class="text-sm font-semibold text-slate-800">Rota Sul - Tarde</p><span class="badge badge-warning">Em andamento</span></div><p class="text-xs text-slate-400 mt-0.5">Ricardo Costa · 8 clientes · R$ 1.950</p></div>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+            </div>
+            <div class="px-4 py-3 border-t border-slate-50 cursor-pointer active:bg-slate-50 transition-colors" onclick="painel_admin_detalheRota(2)">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center shrink-0">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="flex-1 min-w-0"><div class="flex items-center gap-2"><p class="text-sm font-semibold text-slate-800">Rota Leste - Manhã</p><span class="badge badge-success">Finalizada</span></div><p class="text-xs text-slate-400 mt-0.5">Paulo Ferreira · 10 clientes · R$ 2.100</p></div>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+            </div>
+            <div class="px-4 py-3 border-t border-slate-50 cursor-pointer active:bg-slate-50 transition-colors" onclick="painel_admin_detalheRota(3)">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center shrink-0">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                </div>
+                <div class="flex-1 min-w-0"><div class="flex items-center gap-2"><p class="text-sm font-semibold text-slate-800">Rota Oeste - Noite</p><span class="badge badge-muted">Pendente</span></div><p class="text-xs text-slate-400 mt-0.5">Juliana Santos · 6 clientes · R$ 1.400</p></div>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Resumo por Equipe -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 mb-4 overflow-hidden">
+          <div class="p-4 pb-3"><h3 class="font-display text-sm font-bold text-slate-800">Desempenho por Equipe</h3></div>
+          <div id="admin-equipes-list">
+            <div class="px-4 py-3 border-t border-slate-50">
+              <div class="flex items-center justify-between mb-1.5"><p class="text-sm font-semibold text-slate-700">Equipe Norte</p><span class="text-sm font-bold text-marca-700">R$ 18.400</span></div>
+              <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-marca-500 rounded-full" style="width:75%"></div></div>
+              <p class="text-xs text-slate-400 mt-1">28 rotas · 8 clientes pagos</p>
+            </div>
+            <div class="px-4 py-3 border-t border-slate-50">
+              <div class="flex items-center justify-between mb-1.5"><p class="text-sm font-semibold text-slate-700">Equipe Sul</p><span class="text-sm font-bold text-marca-700">R$ 15.200</span></div>
+              <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-marca-400 rounded-full" style="width:62%"></div></div>
+              <p class="text-xs text-slate-400 mt-1">22 rotas · 6 clientes pagos</p>
+            </div>
+            <div class="px-4 py-3 border-t border-slate-50">
+              <div class="flex items-center justify-between mb-1.5"><p class="text-sm font-semibold text-slate-700">Equipe Leste</p><span class="text-sm font-bold text-marca-700">R$ 9.050</span></div>
+              <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-marca-300 rounded-full" style="width:37%"></div></div>
+              <p class="text-xs text-slate-400 mt-1">15 rotas · 4 clientes pagos</p>
+            </div>
+            <div class="px-4 py-3 border-t border-slate-50">
+              <div class="flex items-center justify-between mb-1.5"><p class="text-sm font-semibold text-slate-700">Equipe Oeste</p><span class="text-sm font-bold text-marca-700">R$ 6.000</span></div>
+              <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-marca-200 rounded-full" style="width:25%"></div></div>
+              <p class="text-xs text-slate-400 mt-1">12 rotas · 3 clientes pagos</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Últimas Movimentações -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 mb-6 overflow-hidden">
+          <div class="p-4 pb-3"><h3 class="font-display text-sm font-bold text-slate-800">Últimas Movimentações</h3></div>
+          <div id="admin-mov-list">
+            <div class="px-4 py-3 border-t border-slate-50 flex items-center gap-3">
+              <div class="w-9 h-9 rounded-full bg-green-50 flex items-center justify-center shrink-0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="flex-1 min-w-0"><p class="text-sm text-slate-700 truncate">Recebimento - Carlos Mendes</p><p class="text-xs text-slate-400">R$ 450,00 · PIX</p></div>
+              <span class="text-xs text-slate-400 shrink-0">10:32</span>
+            </div>
+            <div class="px-4 py-3 border-t border-slate-50 flex items-center gap-3">
+              <div class="w-9 h-9 rounded-full bg-red-50 flex items-center justify-center shrink-0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              <div class="flex-1 min-w-0"><p class="text-sm text-slate-700 truncate">Despesa - Combustível</p><p class="text-xs text-slate-400">R$ 120,00 · Ricardo</p></div>
+              <span class="text-xs text-slate-400 shrink-0">09:15</span>
+            </div>
+            <div class="px-4 py-3 border-t border-slate-50 flex items-center gap-3">
+              <div class="w-9 h-9 rounded-full bg-green-50 flex items-center justify-center shrink-0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="flex-1 min-w-0"><p class="text-sm text-slate-700 truncate">Recebimento - Fernanda Lima</p><p class="text-xs text-slate-400">R$ 780,00 · Dinheiro+PIX</p></div>
+              <span class="text-xs text-slate-400 shrink-0">08:47</span>
+            </div>
+            <div class="px-4 py-3 border-t border-slate-50 flex items-center gap-3">
+              <div class="w-9 h-9 rounded-full bg-green-50 flex items-center justify-center shrink-0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="flex-1 min-w-0"><p class="text-sm text-slate-700 truncate">Recebimento - Joaquim Alves</p><p class="text-xs text-slate-400">R$ 350,00 · PIX</p></div>
+              <span class="text-xs text-slate-400 shrink-0">Ontem 17:22</span>
+            </div>
+            <div class="px-4 py-3 border-t border-slate-50 flex items-center gap-3">
+              <div class="w-9 h-9 rounded-full bg-red-50 flex items-center justify-center shrink-0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              <div class="flex-1 min-w-0"><p class="text-sm text-slate-700 truncate">Despesa - Hospedagem</p><p class="text-xs text-slate-400">R$ 320,00 · Paulo</p></div>
+              <span class="text-xs text-slate-400 shrink-0">Ontem 14:05</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        function painel_admin_aplicarFiltros() {
+          var equipe = document.getElementById('admin-filtro-equipe').value;
+          var periodo = document.getElementById('admin-filtro-periodo').value;
+          var rotas = ['Rota Norte - Manhã', 'Rota Sul - Tarde', 'Rota Leste - Manhã', 'Rota Oeste - Noite'];
+          var vendedores = ['Ricardo Costa', 'Ana Marques', 'Paulo Ferreira', 'Juliana Santos', 'Marcos Lima'];
+          if (equipe !== 'todas') {
+            toast('Filtro aplicado: equipe ' + equipe + ' · ' + periodo, 'info');
+          } else {
+            toast('Período: ' + periodo, 'info');
+          }
+        }
+
+        function painel_admin_abrirAddUsuario() {
+          var html = '<div class="space-y-3">' +
+            '<div><label class="block text-xs font-semibold text-slate-500 mb-1">Nome completo</label><input type="text" id="add-nome" placeholder="Ex: Carlos Silva" class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-marca-500"></div>' +
+            '<div><label class="block text-xs font-semibold text-slate-500 mb-1">E-mail</label><input type="email" id="add-email" placeholder="carlos@empresa.com" class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-marca-500"></div>' +
+            '<div><label class="block text-xs font-semibold text-slate-500 mb-1">Telefone</label><input type="tel" id="add-tel" placeholder="(11) 99999-9999" class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-marca-500" oninput="painel_admin_mascaraTel(this)"></div>' +
+            '<div><label class="block text-xs font-semibold text-slate-500 mb-1">Função</label><select id="add-funcao" class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-marca-500"><option>Vendedor</option><option>Supervisor</option><option>Administrador</option></select></div>' +
+            '<div><label class="block text-xs font-semibold text-slate-500 mb-1">Equipe</label><select id="add-equipe" class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-marca-500"><option>Equipe Norte</option><option>Equipe Sul</option><option>Equipe Leste</option><option>Equipe Oeste</option></select></div>' +
+            '<button onclick="painel_admin_salvarUsuario()" class="w-full bg-marca-600 text-white rounded-xl py-3 text-sm font-bold active:scale-95 transition-all mt-2">Cadastrar Usuário</button></div>';
+          abrirModal(html, 'Adicionar Usuário');
+        }
+
+        function painel_admin_mascaraTel(el) {
+          var v = el.value.replace(/\D/g, '').substring(0, 11);
+          if (v.length > 7) { el.value = '(' + v.substring(0,2) + ') ' + v.substring(2,7) + '-' + v.substring(7); }
+          else if (v.length > 2) { el.value = '(' + v.substring(0,2) + ') ' + v.substring(2); }
+        }
+
+        function painel_admin_salvarUsuario() {
+          var nome = document.getElementById('add-nome').value.trim();
+          var email = document.getElementById('add-email').value.trim();
+          if (!nome || !email) { toast('Preencha nome e e-mail', 'erro'); return; }
+          fecharModal();
+          toast('Usuário ' + nome + ' cadastrado com sucesso!', 'ok');
+        }
+
+        function painel_admin_abrirPermissoes() {
+          var html = '<div class="space-y-3">' +
+            '<p class="text-xs text-slate-500 mb-2">Selecione as permissões para cada função:</p>' +
+            '<div class="bg-slate-50 rounded-xl p-3"><div class="flex items-center justify-between mb-2"><span class="text-sm font-semibold text-slate-700">Vendedor</span><span class="text-xs text-slate-400">Acesso básico</span></div>' +
+            '<div class="space-y-1.5">' +
+            '<label class="flex items-center gap-2 text-sm text-slate-600"><input type="checkbox" checked disabled class="rounded text-marca-600"> Cadastrar clientes</label>' +
+            '<label class="flex items-center gap-2 text-sm text-slate-600"><input type="checkbox" checked disabled class="rounded text-marca-600"> Registrar recebimentos</label>' +
+            '<label class="flex items-center gap-2 text-sm text-slate-600"><input type="checkbox" checked disabled class="rounded text-marca-600"> Registrar despesas</label>' +
+            '<label class="flex items-center gap-2 text-sm text-slate-600"><input type="checkbox" class="rounded text-marca-600"> Ver relatórios</label>' +
+            '<label class="flex items-center gap-2 text-sm text-slate-600"><input type="checkbox" class="rounded text-marca-600"> Gerenciar usuários</label></div></div>' +
+            '<div class="bg-slate-50 rounded-xl p-3"><div class="flex items-center justify-between mb-2"><span class="text-sm font-semibold text-slate-700">Supervisor</span><span class="text-xs text-slate-400">Acesso intermediário</span></div>' +
+            '<div class="space-y-1.5"><label class="flex items-center gap-2 text-sm text-slate-600"><input type="checkbox" checked class="rounded text-marca-600"> Cadastrar clientes</label>' +
+            '<label class="flex items-center gap-2 text-sm text-slate-600"><input type="checkbox" checked class="rounded text-marca-600"> Registrar recebimentos</label>' +
+            '<label class="flex items-center gap-2 text-sm text-slate-600"><input type="checkbox" checked class="rounded text-marca-600"> Ver relatórios</label>' +
+            '<label class="flex items-center gap-2 text-sm text-slate-600"><input type="checkbox" checked class="rounded text-marca-600"> Gerenciar usuários</label></div></div>' +
+            '<div class="bg-slate-50 rounded-xl p-3"><div class="flex items-center justify-between mb-2"><span class="text-sm font-semibold text-slate-700">Administrador</span><span class="text-xs text-slate-400">Acesso total</span></div>' +
+            '<div class="space-y-1.5"><label class="flex items-center gap-2 text-sm text-slate-600"><input type="checkbox" checked disabled class="rounded text-marca-600"> Acesso total</label></div></div>' +
+            '<button onclick="painel_admin_salvarPermissoes()" class="w-full bg-marca-600 text-white rounded-xl py-3 text-sm font-bold active:scale-95 transition-all mt-2">Salvar Permissões</button></div>';
+          abrirModal(html, 'Configurar Permissões');
+        }
+
+        function painel_admin_salvarPermissoes() {
+          fecharModal();
+          toast('Permissões atualizadas com sucesso!', 'ok');
+        }
+
+        function painel_admin_detalheVendedor(idx) {
+          var nomes = ['Ricardo Costa', 'Ana Marques', 'Paulo Ferreira', 'Juliana Santos', 'Marcos Lima'];
+          var rotas = [32, 28, 25, 22, 20];
+          var valores = [14200, 11850, 10400, 8900, 7600];
+          var iniciais = ['RC', 'AM', 'PF', 'JS', 'ML'];
+          var cores = ['from-marca-500 to-marca-700', 'from-pink-400 to-rose-600', 'from-amber-400 to-orange-500', 'from-teal-400 to-cyan-600', 'from-violet-400 to-indigo-600'];
+          var v = valores[idx];
+          var html = '<div class="space-y-4">' +
+            '<div class="flex items-center gap-3">' +
+            '<div class="w-14 h-14 rounded-full bg-gradient-to-br ' + cores[idx] + ' flex items-center justify-center text-white text-xl font-bold">' + iniciais[idx] + '</div>' +
+            '<div><p class="font-display text-lg font-bold text-slate-800">' + nomes[idx] + '</p><p class="text-sm text-slate-400">' + rotas[idx] + ' rotas realizadas</p></div></div>' +
+            '<div class="grid grid-cols-2 gap-2">' +
+            '<div class="bg-marca-50 rounded-xl p-3 text-center"><p class="text-lg font-bold text-marca-700">' + (idx + 1) + 'º</p><p class="text-xs text-slate-500">Colocação</p></div>' +
+            '<div class="bg-green-50 rounded-xl p-3 text-center"><p class="text-lg font-bold text-green-700">' + (Math.random() > 0.5 ? '+' : '-') + Math.floor(Math.random() * 15 + 1) + '%</p><p class="text-xs text-slate-500">Variação</p></div>' +
+            '<div class="bg-slate-50 rounded-xl p-3 text-center"><p class="text-lg font-bold text-slate-800">R$ ' + (v / rotas[idx]).toFixed(0).replace('.', ',') + '</p><p class="text-xs text-slate-500">Ticket médio</p></div>' +
+            '<div class="bg-slate-50 rounded-xl p-3 text-center"><p class="text-lg font-bold text-slate-800">' + Math.floor(Math.random() * 5 + 1) + '%</p><p class="text-xs text-slate-500">Inadimplência</p></div></div>' +
+            '<div><p class="text-sm font-semibold text-slate-700 mb-2">Histórico recente</p>' +
+            '<div class="space-y-2">' +
+            '<div class="flex items-center justify-between py-2 border-b border-slate-100"><span class="text-sm text-slate-600">Rota Sul 12/07</span><span class="text-sm font-semibold text-green-600">R$ 520</span></div>' +
+            '<div class="flex items-center justify-between py-2 border-b border-slate-100"><span class="text-sm text-slate-600">Rota Norte 11/07</span><span class="text-sm font-semibold text-green-600">R$ 680</span></div>' +
+            '<div class="flex items-center justify-between py-2"><span class="text-sm text-slate-600">Rota Leste 10/07</span><span class="text-sm font-semibold text-green-600">R$ 450</span></div></div></div>' +
+            '<div class="flex gap-2 pt-2"><button onclick="fecharModal(); mostrarTela(\'perfil\')" class="flex-1 bg-marca-600 text-white rounded-xl py-2.5 text-sm font-bold active:scale-95 transition-all">Ver Perfil</button>' +
+            '<button onclick="fecharModal(); toast(\'Mensagem enviada para ' + nomes[idx] + '\', \'ok\')" class="flex-1 bg-slate-100 text-slate-700 rounded-xl py-2.5 text-sm font-bold active:scale-95 transition-all">Enviar Mensagem</button></div></div>';
+          abrirModal(html, 'Desempenho: ' + nomes[idx]);
+        }
+
+        function painel_admin_detalheRota(idx) {
+          var nomes = ['Ana Marques', 'Ricardo Costa', 'Paulo Ferreira', 'Juliana Santos'];
+          var status = ['Finalizada', 'Em andamento', 'Finalizada', 'Pendente'];
+          var badgeCls = ['badge-success', 'badge-warning', 'badge-success', 'badge-muted'];
+          var rotas = ['Rota Norte - Manhã', 'Rota Sul - Tarde', 'Rota Leste - Manhã', 'Rota Oeste - Noite'];
+          var clientes = [12, 8, 10, 6];
+          var valores = [2840, 1950, 2100, 1400];
+          var html = '<div class="space-y-3">' +
+            '<div class="flex items-center justify-between"><p class="font-display text-lg font-bold text-slate-800">' + rotas[idx] + '</p><span class="' + badgeCls[idx] + '">' + status[idx] + '</span></div>' +
+            '<div class="bg-slate-50 rounded-xl p-3"><div class="grid grid-cols-2 gap-2">' +
+            '<div><p class="text-xs text-slate-400">Vendedor</p><p class="text-sm font-semibold text-slate-700">' + nomes[idx] + '</p></div>' +
+            '<div><p class="text-xs text-slate-400">Clientes</p><p class="text-sm font-semibold text-slate-700">' + clientes[idx] + '</p></div>' +
+            '<div><p class="text-xs text-slate-400">Valor total</p><p class="text-sm font-semibold text-marca-700">R$ ' + valores[idx].toLocaleString('pt-BR') + '</p></div>' +
+            '<div><p class="text-xs text-slate-400">Formas de pgto</p><p class="text-sm font-semibold text-slate-700">50% PIX · 35% Dinheiro · 15% Misto</p></div></div></div>' +
+            '<div><p class="text-sm font-semibold text-slate-700 mb-2">Clientes da rota</p><div class="space-y-1.5">' +
+            '<div class="flex items-center justify-between py-2 border-b border-slate-100"><div class="flex items-center gap-2"><div class="w-7 h-7 rounded-full bg-marca-100 flex items-center justify-center text-marca-700 text-xs font-bold">CM</div><span class="text-sm text-slate-700">Carlos Mendes</span></div><span class="text-sm font-semibold text-green-600">R$ 450</span></div>' +
+            '<div class="flex items-center justify-between py-2 border-b border-slate-100"><div class="flex items-center gap-2"><div class="w-7 h-7 rounded-full bg-pink-100 flex items-center justify-center text-pink-700 text-xs font-bold">FL</div><span class="text-sm text-slate-700">Fernanda Lima</span></div><span class="text-sm font-semibold text-green-600">R$ 780</span></div>' +
+            '<div class="flex items-center justify-between py-2"><div class="flex items-center gap-2"><div class="w-7 h-7 rounded-full bg-amber-100 flex items-center justify-center text-amber-700 text-xs font-bold">JA</div><span class="text-sm text-slate-700">Joaquim Alves</span></div><span class="text-sm font-semibold text-green-600">R$ 350</span></div></div></div>' +
+            '<div class="flex gap-2 pt-2">' +
+            '<button onclick="fecharModal(); toast(\'Relatório enviado por WhatsApp\', \'ok\')" class="flex-1 bg-green-600 text-white rounded-xl py-2.5 text-sm font-bold active:scale-95 transition-all flex items-center justify-center gap-1.5"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d=".05 17.505c-.155 2.577 2.158 4.87 5.118 4.125 2.52-.63 3.538-2.553 4.275-4.62.39-1.075.165-2.215-.69-2.835-.18-.13-.39-.22-.615-.27-.27-.065-.555-.015-.795.06-2.76.825-5.37.81-7.68-.18-1.725-.72-2.67-1.89-2.88-3.24-.18-1.155.39-2.28 1.47-2.97.6-.39 1.305-.51 2.055-.36 1.17.24 2.175.945 2.895 1.98.21.315.285.69.225 1.065-.06.375-.255.72-.555.96-.3.24-.685.345-1.065.285-.255-.045-.495-.165-.69-.345-.54-.735-1.35-1.23-2.31-1.41-1.005-.195-2.025.045-2.835.69-.93.735-1.38 1.815-1.26 3.015.165 1.635 1.095 3.12 2.58 4.14 1.95 1.365 4.38 1.53 6.405.54 2.07-.99 3.375-2.955 3.465-5.22.045-1.095-.27-2.145-1.005-2.985z"/></svg>WhatsApp</button>' +
+            '<button onclick="fecharModal()" class="flex-1 bg-slate-100 text-slate-700 rounded-xl py-2.5 text-sm font-bold active:scale-95 transition-all">Fechar</button></div></div>';
+          abrirModal(html, 'Detalhe da Rota');
+        }
+
+        (function() {
+          var d = new Date();
+          document.getElementById('admin-data-hoje').textContent = d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+        })();
+      </script>
+    </section>
+
     <!-- TELAS -->
 
     </main>
