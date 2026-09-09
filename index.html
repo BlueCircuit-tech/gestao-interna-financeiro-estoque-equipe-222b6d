@@ -348,6 +348,277 @@ function painel_init() {
 if (document.querySelector('[data-tela="painel"]')) painel_init();
 </script>
 
+    <section data-tela="nova-rota" class="hidden">
+  <div class="animate-fadeIn space-y-4 pb-6">
+    <!-- Cabeçalho da tela -->
+    <div class="px-1">
+      <h1 class="font-display text-2xl font-bold text-slate-800">Nova Rota</h1>
+      <p class="text-sm text-slate-500 mt-1">Cadastre a rota do dia e selecione os clientes a visitar</p>
+    </div>
+
+    <!-- Formulário -->
+    <div id="nova_rota_formulario" class="bg-white rounded-2xl p-5 card space-y-4">
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Data</label>
+          <input id="nr_data" type="date" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 font-body focus:outline-none focus:ring-2 focus:ring-marca-500 focus:border-transparent transition" value="">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">KM Inicial</label>
+          <input id="nr_km_inicial" type="number" placeholder="Ex: 45230" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 font-body focus:outline-none focus:ring-2 focus:ring-marca-500 focus:border-transparent transition" value="">
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Veículo</label>
+        <select id="nr_veiculo" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 font-body focus:outline-none focus:ring-2 focus:ring-marca-500 focus:border-transparent transition appearance-none">
+          <option value="">Selecione um veículo</option>
+          <option value="VW Gol">VW Gol</option>
+          <option value="Fiat Strada">Fiat Strada</option>
+          <option value="Toyota Hilux">Toyota Hilux</option>
+          <option value="Chevrolet S10">Chevrolet S10</option>
+          <option value="Hyundai HB20">Hyundai HB20</option>
+          <option value="Fiat Uno">Fiat Uno</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Previsão de Paradas</label>
+        <div class="flex gap-2">
+          <input id="nr_paradas" type="number" min="1" placeholder="Nº de paradas" class="flex-1 px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 font-body focus:outline-none focus:ring-2 focus:ring-marca-500 focus:border-transparent transition">
+          <button onclick="nova_rota_estimar()" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-sm font-semibold transition active:scale-95 flex items-center gap-1.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            Estimar
+          </button>
+        </div>
+        <p id="nr_estimativa" class="text-xs text-slate-400 mt-1.5 hidden"></p>
+      </div>
+    </div>
+
+    <!-- Seletor de Clientes -->
+    <div class="bg-white rounded-2xl p-5 card">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h2 class="font-display text-lg font-bold text-slate-800">Clientes a Visitar</h2>
+          <p class="text-xs text-slate-400 mt-0.5">Selecione os clientes da rota</p>
+        </div>
+        <span id="nr_selecionados_count" class="badge bg-marca-100 text-marca-700 text-xs font-semibold px-2.5 py-1 rounded-full">0 selecionados</span>
+      </div>
+
+      <div class="relative mb-3">
+        <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <input id="nr_busca" type="text" placeholder="Buscar cliente..." oninput="nova_rota_filtrar()" class="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 font-body focus:outline-none focus:ring-2 focus:ring-marca-500 focus:border-transparent transition">
+      </div>
+
+      <div id="nr_lista_clientes" class="space-y-2 max-h-72 overflow-y-auto pr-1">
+        <!-- Clientes serão inseridos via JS -->
+      </div>
+
+      <div id="nr_vazio" class="hidden text-center py-8">
+        <svg class="w-12 h-12 text-slate-300 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        <p class="text-sm text-slate-400">Nenhum cliente encontrado</p>
+      </div>
+    </div>
+
+    <!-- Resumo da Rota -->
+    <div id="nr_resumo" class="hidden">
+      <div class="bg-gradient-to-br from-marca-800 to-marca-600 rounded-2xl p-5 text-white shadow-lg">
+        <div class="flex items-center gap-2 mb-4">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m0 0l6 3m-6-3V7m6 10.386l-5.447-2.724A1 1 0 0113.553 15H9"/></svg>
+          <h2 class="font-display text-lg font-bold">Resumo da Rota</h2>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="bg-white/15 rounded-xl p-3 backdrop-blur-sm">
+            <p class="text-xs text-white/70 mb-0.5">Clientes</p>
+            <p id="nr_total_clientes" class="text-xl font-bold">0</p>
+          </div>
+          <div class="bg-white/15 rounded-xl p-3 backdrop-blur-sm">
+            <p class="text-xs text-white/70 mb-0.5">Recebimento Estimado</p>
+            <p id="nr_valor_estimado" class="text-xl font-bold">R$ 0</p>
+          </div>
+          <div class="bg-white/15 rounded-xl p-3 backdrop-blur-sm">
+            <p class="text-xs text-white/70 mb-0.5">Veículo</p>
+            <p id="nr_resumo_veiculo" class="text-sm font-semibold truncate">—</p>
+          </div>
+          <div class="bg-white/15 rounded-xl p-3 backdrop-blur-sm">
+            <p class="text-xs text-white/70 mb-0.5">Data</p>
+            <p id="nr_resumo_data" class="text-sm font-semibold">—</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botão Flutuante -->
+    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50" style="max-width:400px;width:calc(100% - 32px);">
+      <button id="nr_btn_iniciar" onclick="nova_rota_iniciar()" class="w-full bg-[#2563EB] hover:bg-blue-700 active:scale-95 text-white font-display font-bold text-base py-4 rounded-2xl shadow-xl shadow-blue-500/30 transition flex items-center justify-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243A8 8 0 1117.657 16.657z"/><circle cx="12" cy="11" r="1.5" fill="currentColor" stroke="none"/></svg>
+        Iniciar Rota
+      </button>
+    </div>
+
+    <!-- Espaço para o botão flutuante -->
+    <div class="h-20"></div>
+  </div>
+</section>
+
+<script>
+(function(){
+  const clientes = [
+    { id: 1, nome: "Ana Beatriz Santos", empresa: "Distribuidora Santa Cruz", cidade: "Ribeirão Preto", valor: 2840, tipo: "pix" },
+    { id: 2, nome: "Carlos Eduardo Lima", empresa: "Mercado Popular SP", cidade: "São Paulo", valor: 1560, tipo: "dinheiro" },
+    { id: 3, nome: "Fernanda Oliveira", empresa: "Atacadão Central", cidade: "Campinas", valor: 4200, tipo: "misto" },
+    { id: 4, nome: "João Pedro Almeida", empresa: "Loja do João", cidade: "Sorocaba", valor: 980, tipo: "pix" },
+    { id: 5, nome: "Mariana Costa", empresa: "Supermercado Express", cidade: "Jundiaí", valor: 3150, tipo: "pix" },
+    { id: 6, nome: "Roberto Nascimento", empresa: "Distribuidora R.N.", cidade: "Piracicaba", valor: 1870, tipo: "dinheiro" },
+    { id: 7, nome: "Patrícia Mendes", empresa: "Padaria Pão Quente", cidade: "Limeira", valor: 650, tipo: "misto" },
+    { id: 8, nome: "Lucas Andrade", empresa: "Auto Peças Andrade", cidade: "Araraquara", valor: 2300, tipo: "pix" },
+    { id: 9, nome: "Juliana Ferreira", empresa: "Fashion Store JF", cidade: "Rio Claro", valor: 1340, tipo: "pix" },
+    { id: 10, nome: "André Barbosa", empresa: "Material de Construção AB", cidade: "São Carlos", valor: 4780, tipo: "dinheiro" }
+  ];
+
+  const tipoCores = { pix: { bg: "bg-emerald-100", text: "text-emerald-700", label: "PIX" }, dinheiro: { bg: "bg-amber-100", text: "text-amber-700", label: "Dinheiro" }, misto: { bg: "bg-blue-100", text: "text-blue-700", label: "Misto" } };
+  const avatares = [
+    { bg: "bg-gradient-to-br from-blue-400 to-blue-600" }, { bg: "bg-gradient-to-br from-emerald-400 to-emerald-600" },
+    { bg: "bg-gradient-to-br from-amber-400 to-amber-600" }, { bg: "bg-gradient-to-br from-rose-400 to-rose-600" },
+    { bg: "bg-gradient-to-br from-violet-400 to-violet-600" }, { bg: "bg-gradient-to-br from-cyan-400 to-cyan-600" },
+    { bg: "bg-gradient-to-br from-orange-400 to-orange-600" }, { bg: "bg-gradient-to-br from-teal-400 to-teal-600" },
+    { bg: "bg-gradient-to-br from-pink-400 to-pink-600" }, { bg: "bg-gradient-to-br from-indigo-400 to-indigo-600" }
+  ];
+
+  let selecionados = new Set();
+  let rotaAtiva = false;
+
+  function init() {
+    const d = new Date();
+    document.getElementById("nr_data").value = d.toISOString().split("T")[0];
+    document.getElementById("nr_km_inicial").value = "";
+    document.getElementById("nr_veiculo").value = "";
+    document.getElementById("nr_paradas").value = "";
+    document.getElementById("nr_estimativa").classList.add("hidden");
+    document.getElementById("nr_resumo").classList.add("hidden");
+    document.getElementById("nr_busca").value = "";
+    selecionados.clear();
+    rotaAtiva = false;
+    nova_rota_renderLista(clientes);
+  }
+
+  function nova_rota_renderLista(lista) {
+    const container = document.getElementById("nr_lista_clientes");
+    const vazio = document.getElementById("nr_vazio");
+    if (lista.length === 0) {
+      container.innerHTML = "";
+      vazio.classList.remove("hidden");
+      return;
+    }
+    vazio.classList.add("hidden");
+    container.innerHTML = lista.map((c, i) => {
+      const tc = tipoCores[c.tipo] || tipoCores.pix;
+      const av = avatares[(c.id - 1) % avatares.length];
+      const checked = selecionados.has(c.id) ? "checked" : "";
+      return `<label class="flex items-center gap-3 p-3 rounded-xl border-2 cursor-pointer transition hover:border-marca-300 hover:bg-slate-50 ${selecionados.has(c.id) ? "border-marca-500 bg-marca-50" : "border-slate-100 bg-white"}" onclick="nova_rota_toggle(${c.id}, event)">
+        <input type="checkbox" ${checked} class="w-5 h-5 rounded-md border-2 border-slate-300 text-marca-600 focus:ring-marca-500 focus:ring-offset-0 pointer-events-none" onclick="event.stopPropagation()">
+        <div class="w-10 h-10 ${av.bg} rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">${c.nome.split(" ").map(n => n[0]).slice(0,2).join("")}</div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-semibold text-slate-800 truncate">${c.nome}</p>
+          <p class="text-xs text-slate-400 truncate">${c.empresa} · ${c.cidade}</p>
+        </div>
+        <div class="text-right flex-shrink-0">
+          <p class="text-sm font-bold text-slate-700">${brl(c.valor)}</p>
+          <span class="${tc.bg} ${tc.text} text-[10px] font-semibold px-2 py-0.5 rounded-full">${tc.label}</span>
+        </div>
+      </label>`;
+    }).join("");
+  }
+
+  window.nova_rota_toggle = function(id, event) {
+    event.preventDefault();
+    if (rotaAtiva) return;
+    if (selecionados.has(id)) selecionados.delete(id);
+    else selecionados.add(id);
+    const busca = document.getElementById("nr_busca").value.toLowerCase();
+    const filtrados = clientes.filter(c => c.nome.toLowerCase().includes(busca) || c.empresa.toLowerCase().includes(busca));
+    nova_rota_renderLista(filtrados);
+    nova_rota_atualizarContador();
+  };
+
+  window.nova_rota_filtrar = function() {
+    const termo = document.getElementById("nr_busca").value.toLowerCase();
+    const filtrados = clientes.filter(c => c.nome.toLowerCase().includes(termo) || c.empresa.toLowerCase().includes(termo));
+    nova_rota_renderLista(filtrados);
+  };
+
+  window.nova_rota_estimar = function() {
+    const paradas = parseInt(document.getElementById("nr_paradas").value);
+    const el = document.getElementById("nr_estimativa");
+    if (!paradas || paradas < 1) { toast("Informe o número de paradas", "erro"); return; }
+    const distancia = (paradas * 12.5).toFixed(1);
+    const tempo = paradas * 35;
+    const horas = Math.floor(tempo / 60);
+    const mins = tempo % 60;
+    el.innerHTML = `⏱ ~${distancia} km percorridos · ~${horas}h${mins}min estimados · ${paradas * 8.5} km/h média`;
+    el.classList.remove("hidden");
+    toast("Estimativa calculada com sucesso", "ok");
+  };
+
+  function nova_rota_atualizarContador() {
+    document.getElementById("nr_selecionados_count").textContent = selecionados.size + " selecionado" + (selecionados.size !== 1 ? "s" : "");
+  }
+
+  window.nova_rota_iniciar = function() {
+    const data = document.getElementById("nr_data").value;
+    const veiculo = document.getElementById("nr_veiculo").value;
+    const km = document.getElementById("nr_km_inicial").value;
+    if (!data) { toast("Selecione a data da rota", "erro"); return; }
+    if (!veiculo) { toast("Selecione o veículo", "erro"); return; }
+    if (!km || parseInt(km) <= 0) { toast("Informe a quilometragem inicial", "erro"); return; }
+    if (selecionados.size === 0) { toast("Selecione pelo menos um cliente", "erro"); return; }
+
+    const btn = document.getElementById("nr_btn_iniciar");
+    btn.innerHTML = `<svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg> Ativando GPS...`;
+    btn.disabled = true;
+
+    setTimeout(() => {
+      rotaAtiva = true;
+      const selecionadosClientes = clientes.filter(c => selecionados.has(c.id));
+      const total = selecionadosClientes.reduce((s, c) => s + c.valor, 0);
+      document.getElementById("nr_total_clientes").textContent = selecionados.size;
+      document.getElementById("nr_valor_estimado").textContent = brl(total);
+      document.getElementById("nr_resumo_veiculo").textContent = veiculo;
+      const dataFmt = data.split("-").reverse().join("/");
+      document.getElementById("nr_resumo_data").textContent = dataFmt;
+      document.getElementById("nr_resumo").classList.remove("hidden");
+
+      btn.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Rota Ativa`;
+      btn.classList.remove("bg-[#2563EB]", "hover:bg-blue-700", "shadow-xl", "shadow-blue-500/30");
+      btn.classList.add("bg-emerald-500", "hover:bg-emerald-600", "shadow-xl", "shadow-emerald-500/30");
+
+      toast("Rota iniciada! GPS ativado com sucesso", "ok");
+
+      setTimeout(() => {
+        abrirModal(`
+          <div class="space-y-4">
+            <div class="flex items-center gap-3 p-4 bg-emerald-50 rounded-xl">
+              <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
+                <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <div>
+                <p class="font-display font-bold text-slate-800">Rota Ativa</p>
+                <p class="text-xs text-slate-500">${selecionados.size} clientes · ${brl(total)} estimado</p>
+              </div>
+            </div>
+            <p class="text-sm text-slate-600">Sua rota foi iniciada e o GPS está ativo. Acesse <strong>Recebimento</strong> para registrar os pagamentos dos clientes selecionados.</p>
+            <button onclick="fecharModal(); mostrarTela('recebimento')" class="w-full bg-[#2563EB] hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition active:scale-95">Ir para Recebimento</button>
+            <button onclick="fecharModal()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-3 rounded-xl transition active:scale-95">Fechar</button>
+          </div>
+        `, "Rota Iniciada");
+      }, 600);
+    }, 1500);
+  };
+
+  init();
+})();
+</script>
+
     <!-- TELAS -->
 
     </main>
