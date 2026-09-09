@@ -996,6 +996,121 @@ if (document.querySelector('[data-tela="painel"]')) painel_init();
       </script>
     </section>
 
+    <section data-tela="recebimento" class="hidden">
+  <div class="px-5 pt-2 pb-6 space-y-4 animate-fadeIn">
+    <div class="grid grid-cols-3 gap-2.5">
+      <div class="card text-center py-3">
+        <p class="text-[11px] text-slate-500 font-medium mb-1">Hoje</p>
+        <p class="text-sm font-bold text-marca-800 font-display">R$ 2.340</p>
+        <p class="text-[10px] text-emerald-600 font-medium mt-0.5">+12% ↑</p>
+      </div>
+      <div class="card text-center py-3">
+        <p class="text-[11px] text-slate-500 font-medium mb-1">Pendente</p>
+        <p class="text-sm font-bold text-amber-600 font-display">R$ 1.180</p>
+        <p class="text-[10px] text-slate-400 font-medium mt-0.5">3 clientes</p>
+      </div>
+      <div class="card text-center py-3">
+        <p class="text-[11px] text-slate-500 font-medium mb-1">Vencidos</p>
+        <p class="text-sm font-bold text-red-600 font-display">R$ 420</p>
+        <p class="text-[10px] text-slate-400 font-medium mt-0.5">1 cliente</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-base font-bold text-marca-800 font-display">Novo Recebimento</h2>
+      </div>
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Cliente</label>
+          <div class="relative">
+            <input id="recebimento_buscaCliente" type="text" placeholder="Buscar cliente..." class="w-full text-sm rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 pl-9 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-500 transition-all">
+            <svg class="absolute left-2.5 top-2.5 w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </div>
+          <div id="recebimento_listaClientes" class="hidden mt-1.5 bg-white rounded-xl border border-slate-200 shadow-lg overflow-hidden z-20"></div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Valor (R$)</label>
+            <input id="recebimento_valor" type="text" placeholder="0,00" inputmode="decimal" class="w-full text-sm rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-500 transition-all font-display font-semibold">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Vencimento</label>
+            <input id="recebimento_vencimento" type="date" class="w-full text-sm rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-500 transition-all">
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-2">Forma de Pagamento</label>
+          <div class="grid grid-cols-3 gap-2">
+            <button onclick="recebimento_selectForma('dinheiro')" id="recebimento_btnDinheiro" class="recebimento_formaBtn flex flex-col items-center gap-1 py-2.5 px-2 rounded-xl border-2 border-slate-200 bg-white text-slate-600 transition-all active:scale-95 hover:shadow-md">
+              <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="13" rx="2"/><circle cx="12" cy="13" r="3"/><path d="M2 10h20"/></svg>
+              <span class="text-[10px] font-bold">Dinheiro</span>
+            </button>
+            <button onclick="recebimento_selectForma('pix')" id="recebimento_btnPix" class="recebimento_formaBtn flex flex-col items-center gap-1 py-2.5 px-2 rounded-xl border-2 border-slate-200 bg-white text-slate-600 transition-all active:scale-95 hover:shadow-md">
+              <svg class="w-5 h-5 text-marca-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+              <span class="text-[10px] font-bold">Pix</span>
+            </button>
+            <button onclick="recebimento_selectForma('misto')" id="recebimento_btnMisto" class="recebimento_formaBtn flex flex-col items-center gap-1 py-2.5 px-2 rounded-xl border-2 border-slate-200 bg-white text-slate-600 transition-all active:scale-95 hover:shadow-md">
+              <svg class="w-5 h-5 text-violet-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
+              <span class="text-[10px] font-bold">Misto</span>
+            </button>
+          </div>
+        </div>
+        <div id="recebimento_camposMisto" class="hidden grid-cols-2 gap-3 p-3 bg-violet-50 rounded-xl border border-violet-100">
+          <div>
+            <label class="block text-[10px] font-bold text-violet-700 mb-1 uppercase tracking-wide">Dinheiro (R$)</label>
+            <input id="recebimento_valorDinheiro" type="text" placeholder="0,00" inputmode="decimal" class="w-full text-sm rounded-lg border border-violet-200 bg-white px-3 py-2 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-400/30 focus:border-violet-400 transition-all font-display font-semibold">
+          </div>
+          <div>
+            <label class="block text-[10px] font-bold text-violet-700 mb-1 uppercase tracking-wide">Pix (R$)</label>
+            <input id="recebimento_valorPix" type="text" placeholder="0,00" inputmode="decimal" class="w-full text-sm rounded-lg border border-violet-200 bg-white px-3 py-2 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-400/30 focus:border-violet-400 transition-all font-display font-semibold">
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Observações</label>
+          <textarea id="recebimento_obs" rows="2" placeholder="Ex: Cliente pagou em atraso, negociei desconto..." class="w-full text-sm rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-500 transition-all resize-none"></textarea>
+        </div>
+        <div>
+          <button onclick="recebimento_anexarComprovante()" id="recebimento_btnAnexo" class="flex items-center gap-2 w-full py-2.5 px-3 rounded-xl border-2 border-dashed border-slate-300 text-slate-500 text-sm font-medium hover:border-marca-400 hover:text-marca-600 hover:bg-marca-50/50 transition-all active:scale-[0.98]">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            <span>Anexar Comprovante</span>
+            <span id="recebimento_anexoLabel" class="hidden ml-auto text-[10px] font-bold text-marca-600 bg-marca-50 px-2 py-0.5 rounded-full">1 anexo</span>
+          </button>
+        </div>
+        <input type="file" id="recebimento_inputAnexo" accept="image/*" class="hidden" onchange="recebimento_onAnexoChange(this)">
+        <button onclick="recebimento_salvar()" id="recebimento_btnSalvar" class="w-full bg-marca-800 hover:bg-marca-700 text-white font-bold text-sm py-3.5 rounded-xl transition-all active:scale-95 shadow-lg shadow-marca-800/20 flex items-center justify-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>
+          Salvar Recebimento
+        </button>
+      </div>
+    </div>
+    <div>
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-base font-bold text-marca-800 font-display">Últimos Recebimentos</h2>
+        <button onclick="mostrarTela('relatorios')" class="text-xs font-semibold text-marca-600 hover:text-marca-800 transition-colors">Ver todos</button>
+      </div>
+      <div class="space-y-2.5" id="recebimento_lista"></div>
+    </div>
+  </div>
+  <div id="recebimento_overlaySucesso" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-6">
+    <div class="bg-white rounded-3xl p-8 text-center max-w-xs w-full shadow-2xl">
+      <div class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
+        <svg class="w-10 h-10 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>
+      </div>
+      <h3 class="text-lg font-bold text-marca-800 font-display mb-1">Recebimento Salvo!</h3>
+      <p class="text-sm text-slate-500 mb-5">Registro adicionado com sucesso.</p>
+      <div class="flex gap-2">
+        <button onclick="recebimento_compartilhar()" class="flex-1 flex items-center justify-center gap-1.5 bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold py-3 rounded-xl transition-all active:scale-95">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+          Compartilhar
+        </button>
+        <button onclick="recebimento_novo()" class="flex-1 bg-marca-800 hover:bg-marca-700 text-white text-xs font-bold py-3 rounded-xl transition-all active:scale-95">
+          Novo
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
     <!-- TELAS -->
 
     </main>
