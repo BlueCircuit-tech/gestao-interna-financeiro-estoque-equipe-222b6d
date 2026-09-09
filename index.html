@@ -154,7 +154,201 @@
     <!-- ======= ÁREA DE TELAS ======= -->
     <main id="conteudo" class="flex-1 overflow-y-auto bg-superfice pb-4 min-[450px]:pb-0">
 
-      <!-- TELAS -->
+      <section data-tela="painel" class="hidden">
+  <div class="animate-fade-in space-y-5 pb-6">
+    <div class="flex items-center justify-between">
+      <div>
+        <p class="text-sm text-gray-500 font-body" id="painel-data"></p>
+        <h1 class="text-xl font-display font-bold text-marca-900 mt-0.5">Olá, Carlos</h1>
+        <p class="text-xs text-gray-400 font-body">Vendedor Autônomo · Zona Sul</p>
+      </div>
+      <button onclick="mostrarTela('perfil')" class="w-11 h-11 rounded-full bg-marca-100 flex items-center justify-center text-marca-700 font-display font-bold text-sm active:scale-90 transition-transform">
+        CM
+      </button>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3">
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 active:scale-95 transition-transform cursor-pointer" onclick="mostrarTela('relatorios')">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center">
+            <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0L15 5.818"/></svg>
+          </div>
+          <span class="text-[11px] text-gray-500 font-body">Saldo do Dia</span>
+        </div>
+        <p class="text-lg font-display font-bold text-marca-900">R$ 4.280,00</p>
+        <span class="inline-flex items-center gap-0.5 text-xs text-emerald-600 font-body mt-1">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5"/></svg>
+          +12,5%
+        </span>
+      </div>
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 active:scale-95 transition-transform cursor-pointer" onclick="mostrarTela('recebimento')">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center">
+            <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
+          </div>
+          <span class="text-[11px] text-gray-500 font-body">Pendentes</span>
+        </div>
+        <p class="text-lg font-display font-bold text-marca-900">R$ 1.350,00</p>
+        <span class="inline-flex items-center gap-1 text-xs text-amber-600 font-body mt-1">3 clientes</span>
+      </div>
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 active:scale-95 transition-transform cursor-pointer" onclick="mostrarTela('nova-rota')">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center">
+            <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-1.5m-12 0H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125h1.5m13.5-6.75h-15"/></svg>
+          </div>
+          <span class="text-[11px] text-gray-500 font-body">Km da Rota</span>
+        </div>
+        <p class="text-lg font-display font-bold text-marca-900">142 km</p>
+        <span class="inline-flex items-center gap-1 text-xs text-gray-400 font-body mt-1">de 200 km/dia</span>
+      </div>
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 active:scale-95 transition-transform cursor-pointer relative" onclick="abrirModal(painel_alertasHTML(), 'Alertas')">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center relative">
+            <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"/></svg>
+            <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-white text-[9px] font-bold flex items-center justify-center">2</span>
+          </div>
+          <span class="text-[11px] text-gray-500 font-body">Alertas</span>
+        </div>
+        <p class="text-lg font-display font-bold text-marca-900">2 ativos</p>
+        <span class="inline-flex items-center gap-1 text-xs text-red-600 font-body mt-1">Atenção</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-base font-display font-bold text-marca-900">Recebimentos da Semana</h2>
+        <button onclick="mostrarTela('relatorios')" class="text-xs text-marca-600 font-body font-medium hover:underline">Ver completo</button>
+      </div>
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+        <div class="flex items-end justify-between mb-3">
+          <div><p class="text-2xl font-display font-bold text-marca-900">R$ 12.450</p><p class="text-xs text-gray-500 font-body">Total da semana</p></div>
+          <span class="text-xs font-body font-medium text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">+8,3%</span>
+        </div>
+        <svg viewBox="0 0 320 100" class="w-full h-24">
+          <defs>
+            <linearGradient id="painel-lineGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2563EB" stop-opacity="0.2"/><stop offset="100%" stop-color="#2563EB" stop-opacity="0"/></linearGradient>
+          </defs>
+          <polyline fill="url(#painel-lineGrad)" points="0,85 0,72 53,58 106,65 159,42 212,50 265,28 320,35 320,100 0,100" stroke="none"/>
+          <polyline fill="none" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0,72 53,58 106,65 159,42 212,50 265,28 320,35"/>
+          <circle cx="0" cy="72" r="4" fill="#2563EB" stroke="white" stroke-width="2"/>
+          <circle cx="53" cy="58" r="4" fill="white" stroke="#2563EB" stroke-width="2"/>
+          <circle cx="106" cy="65" r="4" fill="white" stroke="#2563EB" stroke-width="2"/>
+          <circle cx="159" cy="42" r="4" fill="white" stroke="#2563EB" stroke-width="2"/>
+          <circle cx="212" cy="50" r="4" fill="white" stroke="#2563EB" stroke-width="2"/>
+          <circle cx="265" cy="28" r="4" fill="#2563EB" stroke="white" stroke-width="2"/>
+          <circle cx="320" cy="35" r="4" fill="white" stroke="#2563EB" stroke-width="2"/>
+          <text x="0" y="96" text-anchor="middle" class="text-[9px]" fill="#9CA3AF" font-family="system-ui">Seg</text>
+          <text x="53" y="96" text-anchor="middle" class="text-[9px]" fill="#9CA3AF" font-family="system-ui">Ter</text>
+          <text x="106" y="96" text-anchor="middle" class="text-[9px]" fill="#9CA3AF" font-family="system-ui">Qua</text>
+          <text x="159" y="96" text-anchor="middle" class="text-[9px]" fill="#9CA3AF" font-family="system-ui">Qui</text>
+          <text x="212" y="96" text-anchor="middle" class="text-[9px]" fill="#9CA3AF" font-family="system-ui">Sex</text>
+          <text x="265" y="96" text-anchor="middle" class="text-[9px]" fill="#9CA3AF" font-family="system-ui">Sáb</text>
+          <text x="320" y="96" text-anchor="middle" class="text-[9px]" fill="#9CA3AF" font-family="system-ui">Dom</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3">
+      <button onclick="mostrarTela('nova-rota')" class="bg-marca-900 rounded-2xl p-4 shadow-lg shadow-marca-900/20 active:scale-95 transition-all text-left flex flex-col gap-2">
+        <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z"/></svg>
+        </div>
+        <span class="text-white font-display font-bold text-sm">Nova Rota</span>
+        <span class="text-white/60 text-[11px] font-body">Planejar trajeto</span>
+      </button>
+      <button onclick="mostrarTela('recebimento')" class="bg-marca-600 rounded-2xl p-4 shadow-lg shadow-marca-600/20 active:scale-95 transition-all text-left flex flex-col gap-2">
+        <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z"/></svg>
+        </div>
+        <span class="text-white font-display font-bold text-sm">Receber</span>
+        <span class="text-white/60 text-[11px] font-body">Registrar pagamento</span>
+      </button>
+      <button onclick="mostrarTela('despesas')" class="bg-white border-2 border-gray-200 rounded-2xl p-4 shadow-sm active:scale-95 transition-all text-left flex flex-col gap-2">
+        <div class="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center">
+          <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z"/></svg>
+        </div>
+        <span class="text-marca-900 font-display font-bold text-sm">Despesa</span>
+        <span class="text-gray-500 text-[11px] font-body">Hospedagem, alimentação</span>
+      </button>
+      <button onclick="mostrarTela('relatorios')" class="bg-white border-2 border-gray-200 rounded-2xl p-4 shadow-sm active:scale-95 transition-all text-left flex flex-col gap-2">
+        <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
+          <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z"/></svg>
+        </div>
+        <span class="text-marca-900 font-display font-bold text-sm">Relatório</span>
+        <span class="text-gray-500 text-[11px] font-body">Enviar via WhatsApp</span>
+      </button>
+    </div>
+
+    <div>
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-base font-display font-bold text-marca-900">Próximo Cliente</h2>
+        <button onclick="mostrarTela('clientes')" class="text-xs text-marca-600 font-body font-medium hover:underline">Ver todos</button>
+      </div>
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden" id="painel-card-cliente">
+        <div class="p-4 flex items-center gap-3 active:bg-gray-50 transition-colors cursor-pointer" onclick="abrirModal(painel_clienteDetalhe(), 'Detalhe do Cliente')">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-marca-600 to-marca-800 flex items-center justify-center text-white font-display font-bold text-sm shrink-0">RS</div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2">
+              <p class="text-sm font-display font-bold text-marca-900 truncate">Roberto Silva</p>
+              <span class="badge badge-success text-[10px]">Pendente</span>
+            </div>
+            <p class="text-xs text-gray-500 font-body truncate mt-0.5">Rua das Palmeiras, 342 · Jardim Botânico</p>
+            <div class="flex items-center gap-1 mt-1">
+              <svg class="w-3 h-3 text-marca-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg>
+              <span class="text-[11px] text-gray-400 font-body">4,2 km da rota atual</span>
+            </div>
+          </div>
+          <div class="text-right shrink-0">
+            <p class="text-sm font-display font-bold text-marca-900">R$ 850,00</p>
+            <p class="text-[10px] text-gray-400 font-body">Venc. 28/01</p>
+          </div>
+        </div>
+        <div class="border-t border-gray-100 flex">
+          <button onclick="mostrarTela('recebimento');toast('Cliente selecionado: Roberto Silva','info')" class="flex-1 py-2.5 text-xs font-body font-medium text-marca-600 hover:bg-marca-50 transition-colors flex items-center justify-center gap-1.5 active:bg-marca-100">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0L15 5.818"/></svg>
+            Receber
+          </button>
+          <div class="w-px bg-gray-100"></div>
+          <button onclick="mostrarTela('clientes');toast('Perfil de Roberto Silva','info')" class="flex-1 py-2.5 text-xs font-body font-medium text-marca-600 hover:bg-marca-50 transition-colors flex items-center justify-center gap-1.5 active:bg-marca-100">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.25h15a1.125 1.125 0 0 0 1.125-1.125v-1.059c0-.397-.158-.78-.44-1.06l-3.6-3.6a1.125 1.125 0 0 0-1.59 0l-1.714 1.714V19.125a1.125 1.125 0 0 1-1.125-1.125v-.75H4.5v.75a1.125 1.125 0 0 1-1.125 1.125Z"/></svg>
+            Perfil
+          </button>
+          <div class="w-px bg-gray-100"></div>
+          <button onclick="mostrarTela('nova-rota');toast('Rota atualizada com Roberto Silva','ok')" class="flex-1 py-2.5 text-xs font-body font-medium text-marca-600 hover:bg-marca-50 transition-colors flex items-center justify-center gap-1.5 active:bg-marca-100">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z"/></svg>
+            Rota
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+function painel_alertasHTML() {
+  return '<div class="space-y-3">' +
+    '<div class="flex gap-3 p-3 bg-amber-50 rounded-xl border border-amber-200"><div class="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center shrink-0"><svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg></div><div><p class="text-sm font-body font-medium text-marca-900">3 recibos vencem hoje</p><p class="text-xs text-gray-500 font-body">Total: R$ 1.350,00 · Roberto Silva, Ana Costa, Pedro Souza</p></div></div>' +
+    '<div class="flex gap-3 p-3 bg-red-50 rounded-xl border border-red-200"><div class="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center shrink-0"><svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"/></svg></div><div><p class="text-sm font-body font-medium text-marca-900">Despesa pendente: combustível</p><p class="text-xs text-gray-500 font-body">R$ 180,00 · Posto Ipiranga · 26/01</p></div></div>' +
+  '</div>';
+}
+function painel_clienteDetalhe() {
+  return '<div class="space-y-4">' +
+    '<div class="flex items-center gap-3"><div class="w-14 h-14 rounded-full bg-gradient-to-br from-marca-600 to-marca-800 flex items-center justify-center text-white font-display font-bold text-lg">RS</div><div><p class="font-display font-bold text-marca-900">Roberto Silva</p><p class="text-xs text-gray-500 font-body">Cliente desde Jan/2024</p></div></div>' +
+    '<div class="grid grid-cols-2 gap-2"><div class="bg-gray-50 rounded-xl p-3"><p class="text-[10px] text-gray-500 font-body uppercase tracking-wide">Valor</p><p class="text-sm font-display font-bold text-marca-900">R$ 850,00</p></div><div class="bg-gray-50 rounded-xl p-3"><p class="text-[10px] text-gray-500 font-body uppercase tracking-wide">Vencimento</p><p class="text-sm font-display font-bold text-marca-900">28/01/2025</p></div><div class="bg-gray-50 rounded-xl p-3"><p class="text-[10px] text-gray-500 font-body uppercase tracking-wide">Pagamento</p><p class="text-sm font-display font-bold text-marca-900">Pix</p></div><div class="bg-gray-50 rounded-xl p-3"><p class="text-[10px] text-gray-500 font-body uppercase tracking-wide">Status</p><p class="text-sm font-display font-bold text-amber-600">Pendente</p></div></div>' +
+    '<div class="bg-gray-50 rounded-xl p-3"><p class="text-[10px] text-gray-500 font-body uppercase tracking-wide mb-1">Endereço</p><p class="text-xs font-body text-marca-900">Rua das Palmeiras, 342<br>Jardim Botânico · Curitiba - PR</p></div>' +
+    '<div class="flex gap-2 pt-1"><button onclick="mostrarTela(\'recebimento\');fecharModal();toast(\'Cliente selecionado: Roberto Silva\',\'info\')" class="flex-1 bg-marca-600 text-white text-sm font-body font-medium py-2.5 rounded-xl active:scale-95 transition-transform">Registrar Recebimento</button><button onclick="fecharModal();mostrarTela(\'relatorios\');toast(\'Gerando relatório...\',\'info\')" class="flex-1 bg-gray-100 text-marca-900 text-sm font-body font-medium py-2.5 rounded-xl active:scale-95 transition-transform">Relatório</button></div>' +
+  '</div>';
+}
+function painel_init() {
+  var d = new Date();
+  var meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+  var el = document.getElementById('painel-data');
+  if (el) el.textContent = d.getDate() + ' de ' + meses[d.getMonth()] + ' de ' + d.getFullYear();
+}
+if (document.querySelector('[data-tela="painel"]')) painel_init();
+</script>
+
+    <!-- TELAS -->
 
     </main>
 
