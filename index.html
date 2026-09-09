@@ -2218,6 +2218,499 @@ if (document.querySelector('[data-tela="painel"]')) painel_init();
 })();
 </script>
 
+    <section data-tela="perfil" class="hidden">
+      <div class="screen-enter">
+        <!-- Header do Perfil -->
+        <div class="px-5 pt-6 pb-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <h1 class="font-display text-2xl font-bold text-marca-900">Meu Perfil</h1>
+              <p class="text-sm text-gray-500 mt-0.5">Gerencie sua conta e preferências</p>
+            </div>
+            <button onclick="mostrarTela('relatorios')" class="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors active:scale-95">
+              <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card de Perfil -->
+        <div class="px-5 mb-5">
+          <div class="card p-5">
+            <div class="flex items-center gap-4">
+              <div class="relative">
+                <div class="w-16 h-16 rounded-full bg-gradient-to-br from-marca-500 to-marca-700 flex items-center justify-center text-white text-xl font-bold font-display shadow-lg shadow-marca-500/30">
+                  RS
+                </div>
+                <button onclick="perfil_editarFoto()" class="absolute -bottom-0.5 -right-0.5 w-6 h-6 bg-white rounded-full shadow-md flex items-center justify-center border-2 border-marca-100">
+                  <svg class="w-3 h-3 text-marca-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.654-.257 1.447.218 1.891l3.063 2.25a.75.75 0 001.059-.052l3.063-2.25c.475-.444.598-1.237.218-1.891a2.31 2.31 0 00-1.64-1.055l-3.425-1.152a.75.75 0 00-.848.073L6.827 6.175zM16.5 9.75a.75.75 0 01.75.75v.008c0 .414-.336.75-.75.75H15a.75.75 0 01-.75-.75v-.008c0-.414.336-.75.75-.75h1.5zM12 21a8.97 8.97 0 01-4.988-1.397l3.425-1.152a.75.75 0 01.848.073l3.063 2.25c.475.444.598 1.237.218 1.891a2.31 2.31 0 01-1.64 1.055L12 18.375V21z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9.75L18 12m0 0l2.25 2.25M18 12H15.75"/></svg>
+                </button>
+              </div>
+              <div class="flex-1 min-w-0">
+                <h2 class="font-display font-bold text-lg text-marca-900 leading-tight">Rafael Santos</h2>
+                <p class="text-sm text-marca-500 font-medium mt-0.5">Motorista e Responsável Financeiro</p>
+                <div class="flex items-center gap-1.5 mt-1.5">
+                  <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.04 12.04 0 01-7.143-7.143c-.162-.441.004-.928.38-1.211l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/></svg>
+                  <span class="text-xs text-gray-500">(11) 99876-5432</span>
+                </div>
+              </div>
+            </div>
+            <div class="flex gap-2 mt-4 pt-4 border-t border-gray-100">
+              <button onclick="perfil_editarPerfil()" class="btn flex-1 text-sm py-2.5 flex items-center justify-center gap-1.5">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/></svg>
+                Editar Perfil
+              </button>
+              <button onclick="perfil_sair()" class="flex-1 text-sm py-2.5 rounded-xl border-2 border-red-200 text-red-600 font-semibold hover:bg-red-50 transition-colors active:scale-95 flex items-center justify-center gap-1.5">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"/></svg>
+                Sair
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Minhas Rotas - Acesso Rápido -->
+        <div class="px-5 mb-5">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="font-display font-bold text-base text-marca-900">Minhas Rotas</h3>
+            <button onclick="mostrarTela('relatorios')" class="text-xs text-marca-500 font-semibold hover:text-marca-700 transition-colors flex items-center gap-0.5">
+              Ver todas
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+            </button>
+          </div>
+          <div class="flex gap-3 overflow-x-auto pb-1 -mx-5 px-5 snap-x snap-mandatory" style="scrollbar-width:none;" id="rotas-horizontal">
+            <div onclick="mostrarTela('relatorios')" class="card p-4 min-w-[200px] snap-start cursor-pointer hover:shadow-md transition-all active:scale-[0.97] border-l-4 border-l-marca-500">
+              <div class="flex items-center justify-between mb-2">
+                <span class="badge badge-success">Ativa</span>
+                <span class="text-xs text-gray-400">Hoje</span>
+              </div>
+              <p class="font-display font-bold text-sm text-marca-900">Rota São Paulo - Campinas</p>
+              <p class="text-xs text-gray-500 mt-1">SP → Campinas → Jundiaí</p>
+              <div class="flex items-center gap-3 mt-3 pt-3 border-t border-gray-100">
+                <div class="flex items-center gap-1 text-xs text-gray-500">
+                  <svg class="w-3.5 h-3.5 text-marca-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+                  3 paradas
+                </div>
+                <div class="flex items-center gap-1 text-xs text-gray-500">
+                  <svg class="w-3.5 h-3.5 text-marca-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  4h30
+                </div>
+              </div>
+            </div>
+            <div onclick="mostrarTela('relatorios')" class="card p-4 min-w-[200px] snap-start cursor-pointer hover:shadow-md transition-all active:scale-[0.97] border-l-4 border-l-gray-300">
+              <div class="flex items-center justify-between mb-2">
+                <span class="badge badge-gray">Concluída</span>
+                <span class="text-xs text-gray-400">Ontem</span>
+              </div>
+              <p class="font-display font-bold text-sm text-marca-900">Rota Interior - Litoral</p>
+              <p class="text-xs text-gray-500 mt-1">São José → Santos → Guarujá</p>
+              <div class="flex items-center gap-3 mt-3 pt-3 border-t border-gray-100">
+                <div class="flex items-center gap-1 text-xs text-gray-500">
+                  <svg class="w-3.5 h-3.5 text-marca-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+                  4 paradas
+                </div>
+                <div class="flex items-center gap-1 text-xs text-gray-500">
+                  <svg class="w-3.5 h-3.5 text-marca-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  5h15
+                </div>
+              </div>
+            </div>
+            <div onclick="perfil_addRota()" class="min-w-[200px] snap-start cursor-pointer">
+              <div class="card p-4 h-full flex flex-col items-center justify-center gap-2 border-2 border-dashed border-gray-200 hover:border-marca-300 hover:bg-marca-50/50 transition-all active:scale-[0.97]">
+                <div class="w-10 h-10 rounded-full bg-marca-100 flex items-center justify-center">
+                  <svg class="w-5 h-5 text-marca-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+                </div>
+                <span class="text-xs font-semibold text-marca-500">Nova Rota</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Meus Recebimentos - Resumo -->
+        <div class="px-5 mb-5">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="font-display font-bold text-base text-marca-900">Meus Recebimentos</h3>
+            <button onclick="mostrarTela('recebimento')" class="text-xs text-marca-500 font-semibold hover:text-marca-700 transition-colors flex items-center gap-0.5">
+              Ver todos
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+            </button>
+          </div>
+          <div class="card overflow-hidden" id="recebimentos-list">
+            <div class="divide-y divide-gray-50" id="perfil-recebimentos"></div>
+          </div>
+        </div>
+
+        <!-- Configurações -->
+        <div class="px-5 mb-5">
+          <h3 class="font-display font-bold text-base text-marca-900 mb-3">Configurações</h3>
+          <div class="card overflow-hidden">
+            <div class="divide-y divide-gray-50">
+              <!-- Notificações -->
+              <div class="flex items-center justify-between p-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center">
+                    <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/></svg>
+                  </div>
+                  <div>
+                    <p class="text-sm font-semibold text-marca-900">Notificações</p>
+                    <p class="text-xs text-gray-400">Novo recebimento</p>
+                  </div>
+                </div>
+                <button onclick="perfil_toggle(this, 'notif_recebimento')" class="perfil-toggle relative w-12 h-7 rounded-full bg-marca-500 transition-colors duration-200" data-ativo="true">
+                  <span class="absolute top-0.5 left-6 w-6 h-6 rounded-full bg-white shadow-sm transition-all duration-200"></span>
+                </button>
+              </div>
+              <!-- Lembrete de Rota -->
+              <div class="flex items-center justify-between p-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-9 h-9 rounded-xl bg-emerald-50 flex items-center justify-center">
+                    <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  </div>
+                  <div>
+                    <p class="text-sm font-semibold text-marca-900">Lembrete de Rota</p>
+                    <p class="text-xs text-gray-400">Alerta diário às 07h</p>
+                  </div>
+                </div>
+                <button onclick="perfil_toggle(this, 'lembrete_rota')" class="perfil-toggle relative w-12 h-7 rounded-full bg-marca-500 transition-colors duration-200" data-ativo="true">
+                  <span class="absolute top-0.5 left-6 w-6 h-6 rounded-full bg-white shadow-sm transition-all duration-200"></span>
+                </button>
+              </div>
+              <!-- Alerta de Despesa -->
+              <div class="flex items-center justify-between p-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-9 h-9 rounded-xl bg-amber-50 flex items-center justify-center">
+                    <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>
+                  </div>
+                  <div>
+                    <p class="text-sm font-semibold text-marca-900">Alerta de Despesa</p>
+                    <p class="text-xs text-gray-400">Avisar ao exceder limite</p>
+                  </div>
+                </div>
+                <button onclick="perfil_toggle(this, 'alerta_despesa')" class="perfil-toggle relative w-12 h-7 rounded-full bg-gray-300 transition-colors duration-200" data-ativo="false">
+                  <span class="absolute top-0.5 left-0.5 w-6 h-6 rounded-full bg-white shadow-sm transition-all duration-200"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Preferências -->
+        <div class="px-5 mb-5">
+          <h3 class="font-display font-bold text-base text-marca-900 mb-3">Preferências</h3>
+          <div class="card overflow-hidden">
+            <button onclick="perfil_abrirIdioma()" class="w-full flex items-center justify-between p-4 hover:bg-gray-50 transition-colors active:bg-gray-100">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-purple-50 flex items-center justify-center">
+                  <svg class="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 8.73 15.8 8.73 15.8m0 0l2.334-4.5M12 12.75h.008v.008H12v-.008z"/></svg>
+                </div>
+                <div class="text-left">
+                  <p class="text-sm font-semibold text-marca-900">Idioma</p>
+                  <p class="text-xs text-gray-400" id="idioma-atual">Português (Brasil)</p>
+                </div>
+              </div>
+              <svg class="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+            </button>
+            <button onclick="perfil_abrirMoeda()" class="w-full flex items-center justify-between p-4 hover:bg-gray-50 transition-colors active:bg-gray-100 border-t border-gray-50">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-green-50 flex items-center justify-center">
+                  <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <div class="text-left">
+                  <p class="text-sm font-semibold text-marca-900">Moeda</p>
+                  <p class="text-xs text-gray-400" id="moeda-atual">Real (BRL)</p>
+                </div>
+              </div>
+              <svg class="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+            </button>
+            <button onclick="perfil_abrirFormatoData()" class="w-full flex items-center justify-between p-4 hover:bg-gray-50 transition-colors active:bg-gray-100 border-t border-gray-50">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-orange-50 flex items-center justify-center">
+                  <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/></svg>
+                </div>
+                <div class="text-left">
+                  <p class="text-sm font-semibold text-marca-900">Formato de Data</p>
+                  <p class="text-xs text-gray-400" id="data-format-atual">DD/MM/AAAA</p>
+                </div>
+              </div>
+              <svg class="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Sobre -->
+        <div class="px-5 mb-8">
+          <h3 class="font-display font-bold text-base text-marca-900 mb-3">Sobre</h3>
+          <div class="card p-5 text-center">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-marca-500 to-marca-700 flex items-center justify-center mx-auto mb-3 shadow-lg shadow-marca-500/20">
+              <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg>
+            </div>
+            <h4 class="font-display font-bold text-lg text-marca-900">RoteiroExpress</h4>
+            <p class="text-xs text-gray-400 mt-0.5">Versão 2.4.1</p>
+            <p class="text-xs text-gray-400 mt-3 leading-relaxed px-2">
+              Gerencie rotas, clientes, recebimentos e despesas de forma simples e integrada.
+            </p>
+            <div class="flex items-center justify-center gap-4 mt-4 pt-4 border-t border-gray-100">
+              <button onclick="perfil_termos()" class="text-xs text-marca-500 font-semibold hover:text-marca-700 transition-colors">Termos de Uso</button>
+              <span class="text-gray-200">|</span>
+              <button onclick="perfil_privacidade()" class="text-xs text-marca-500 font-semibold hover:text-marca-700 transition-colors">Privacidade</button>
+              <span class="text-gray-200">|</span>
+              <button onclick="perfil_suporte()" class="text-xs text-marca-500 font-semibold hover:text-marca-700 transition-colors">Suporte</button>
+            </div>
+            <p class="text-xs text-gray-300 mt-3">© 2025 RoteiroExpress · BlueCircuit</p>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        // Dados de exemplo de recebimentos
+        var perfil_recebimentosData = [
+          { id: 1, cliente: 'Carlos Eduardo Lima', valor: 1250.00, metodo: 'PIX', data: '2025-01-15', status: 'recebido', rota: 'SP - Campinas' },
+          { id: 2, cliente: 'Marina Oliveira Costa', valor: 890.50, metodo: 'Misto', data: '2025-01-15', status: 'recebido', rota: 'SP - Campinas' },
+          { id: 3, cliente: 'Transportes JB Ltda', valor: 3400.00, metodo: 'Dinheiro', data: '2025-01-14', status: 'recebido', rota: 'Interior - Litoral' },
+          { id: 4, cliente: 'Ana Paula Ferreira', valor: 560.00, metodo: 'PIX', data: '2025-01-14', status: 'pendente', rota: 'SP - Campinas' },
+          { id: 5, cliente: 'Distribuidora São Paulo', valor: 2100.00, metodo: 'PIX', data: '2025-01-13', status: 'recebido', rota: 'Interior - Litoral' },
+          { id: 6, cliente: 'Fernando Henrique Silva', valor: 750.00, metodo: 'Dinheiro', data: '2025-01-13', status: 'recebido', rota: 'SP - Sorocaba' }
+        ];
+
+        function perfil_getMetodoIcon(metodo) {
+          if (metodo === 'PIX') return '<span class="badge badge-info text-xs">PIX</span>';
+          if (metodo === 'Dinheiro') return '<span class="badge badge-success text-xs">Dinheiro</span>';
+          return '<span class="badge badge-warning text-xs">Misto</span>';
+        }
+
+        function perfil_renderRecebimentos() {
+          var el = document.getElementById('perfil-recebimentos');
+          if (!el) return;
+          var html = '';
+          perfil_recebimentosData.forEach(function(r) {
+            var statusClass = r.status === 'recebido' ? 'badge-success' : 'badge-warning';
+            var statusText = r.status === 'recebido' ? 'Recebido' : 'Pendente';
+            var initials = r.cliente.split(' ').map(function(n){return n[0]}).slice(0,2).join('');
+            var bgColor = ['bg-blue-100','bg-emerald-100','bg-amber-100','bg-purple-100','bg-rose-100','bg-cyan-100'][r.id % 6];
+            var textColor = ['text-blue-600','text-emerald-600','text-amber-600','text-purple-600','text-rose-600','text-cyan-600'][r.id % 6];
+            html += '<div onclick="perfil_verRecebimento(' + r.id + ')" class="flex items-center gap-3 p-4 hover:bg-gray-50 transition-colors cursor-pointer active:bg-gray-100">' +
+              '<div class="w-10 h-10 rounded-full ' + bgColor + ' flex items-center justify-center text-xs font-bold ' + textColor + ' flex-shrink-0">' + initials + '</div>' +
+              '<div class="flex-1 min-w-0">' +
+                '<div class="flex items-center justify-between">' +
+                  '<p class="text-sm font-semibold text-marca-900 truncate">' + r.cliente + '</p>' +
+                  '<span class="text-sm font-bold text-marca-700 flex-shrink-0 ml-2">' + brl(r.valor) + '</span>' +
+                '</div>' +
+                '<div class="flex items-center gap-2 mt-1">' +
+                  perfil_getMetodoIcon(r.metodo) +
+                  '<span class="text-xs text-gray-400">' + dataBR(r.data) + '</span>' +
+                '</div>' +
+              '</div>' +
+              '<svg class="w-4 h-4 text-gray-300 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>' +
+            '</div>';
+          });
+          el.innerHTML = html;
+        }
+
+        function perfil_verRecebimento(id) {
+          var r = perfil_recebimentosData.find(function(x){ return x.id === id; });
+          if (!r) return;
+          var initials = r.cliente.split(' ').map(function(n){return n[0]}).slice(0,2).join('');
+          var html = '<div class="space-y-4">' +
+            '<div class="flex items-center gap-3 pb-4 border-b border-gray-100">' +
+              '<div class="w-12 h-12 rounded-full bg-gradient-to-br from-marca-400 to-marca-600 flex items-center justify-center text-white text-sm font-bold">' + initials + '</div>' +
+              '<div><p class="font-display font-bold text-marca-900">' + r.cliente + '</p><p class="text-xs text-gray-400">Rota: ' + r.rota + '</p></div>' +
+            '</div>' +
+            '<div class="grid grid-cols-2 gap-3">' +
+              '<div class="bg-gray-50 rounded-xl p-3"><p class="text-xs text-gray-400">Valor</p><p class="font-bold text-marca-900">' + brl(r.valor) + '</p></div>' +
+              '<div class="bg-gray-50 rounded-xl p-3"><p class="text-xs text-gray-400">Método</p><p class="font-bold text-marca-900">' + r.metodo + '</p></div>' +
+              '<div class="bg-gray-50 rounded-xl p-3"><p class="text-xs text-gray-400">Data</p><p class="font-bold text-marca-900">' + dataBR(r.data) + '</p></div>' +
+              '<div class="bg-gray-50 rounded-xl p-3"><p class="text-xs text-gray-400">Status</p><span class="badge ' + (r.status==='recebido'?'badge-success':'badge-warning') + '">' + (r.status==='recebido'?'Recebido':'Pendente') + '</span></div>' +
+            '</div>' +
+            (r.status === 'pendente' ? '<button onclick="perfil_confirmarRecebimento(' + r.id + ')" class="btn w-full">Confirmar Recebimento</button>' : '<p class="text-center text-xs text-gray-400">Este recebimento já foi confirmado</p>') +
+          '</div>';
+          abrirModal(html, 'Detalhes do Recebimento');
+        }
+
+        function perfil_confirmarRecebimento(id) {
+          var r = perfil_recebimentosData.find(function(x){ return x.id === id; });
+          if (r) {
+            r.status = 'recebido';
+            perfil_renderRecebimentos();
+            fecharModal();
+            toast('Recebimento confirmado com sucesso!', 'ok');
+          }
+        }
+
+        function perfil_toggle(btn, config) {
+          var ativo = btn.getAttribute('data-ativo') === 'true';
+          var novoAtivo = !ativo;
+          btn.setAttribute('data-ativo', String(novoAtivo));
+          var span = btn.querySelector('span');
+          if (novoAtivo) {
+            btn.classList.remove('bg-gray-300');
+            btn.classList.add('bg-marca-500');
+            span.classList.remove('left-0.5');
+            span.classList.add('left-6');
+          } else {
+            btn.classList.remove('bg-marca-500');
+            btn.classList.add('bg-gray-300');
+            span.classList.remove('left-6');
+            span.classList.add('left-0.5');
+          }
+          toast(novoAtivo ? 'Configuração ativada' : 'Configuração desativada', 'info');
+        }
+
+        function perfil_editarPerfil() {
+          var html = '<div class="space-y-4">' +
+            '<div><label class="block text-xs font-semibold text-gray-500 mb-1">Nome completo</label><input type="text" value="Rafael Santos" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-body focus:border-marca-500 focus:ring-1 focus:ring-marca-500 outline-none transition-all" /></div>' +
+            '<div><label class="block text-xs font-semibold text-gray-500 mb-1">Função</label><input type="text" value="Motorista e Responsável Financeiro" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-body focus:border-marca-500 focus:ring-1 focus:ring-marca-500 outline-none transition-all" /></div>' +
+            '<div><label class="block text-xs font-semibold text-gray-500 mb-1">Telefone</label><input type="tel" value="(11) 99876-5432" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-body focus:border-marca-500 focus:ring-1 focus:ring-marca-500 outline-none transition-all" /></div>' +
+            '<div><label class="block text-xs font-semibold text-gray-500 mb-1">E-mail</label><input type="email" value="rafael.santos@empresa.com" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-body focus:border-marca-500 focus:ring-1 focus:ring-marca-500 outline-none transition-all" /></div>' +
+            '<div><label class="block text-xs font-semibold text-gray-500 mb-1">CNPJ/CPF</label><input type="text" value="123.456.789-00" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-body focus:border-marca-500 focus:ring-1 focus:ring-marca-500 outline-none transition-all" /></div>' +
+            '<button onclick="perfil_salvarPerfil()" class="btn w-full">Salvar Alterações</button>' +
+          '</div>';
+          abrirModal(html, 'Editar Perfil');
+        }
+
+        function perfil_salvarPerfil() {
+          fecharModal();
+          toast('Perfil atualizado com sucesso!', 'ok');
+        }
+
+        function perfil_editarFoto() {
+          toast('Selecione uma foto da galeria ou câmera', 'info');
+        }
+
+        function perfil_sair() {
+          var html = '<div class="text-center py-4">' +
+            '<div class="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center mx-auto mb-4">' +
+              '<svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"/></svg>' +
+            '</div>' +
+            '<h3 class="font-display font-bold text-lg text-marca-900">Sair do aplicativo?</h3>' +
+            '<p class="text-sm text-gray-500 mt-1 mb-6">Você precisará fazer login novamente para acessar seus dados.</p>' +
+            '<div class="flex gap-3">' +
+              '<button onclick="fecharModal()" class="flex-1 py-3 rounded-xl border-2 border-gray-200 text-gray-600 font-semibold text-sm hover:bg-gray-50 transition-colors active:scale-95">Cancelar</button>' +
+              '<button onclick="perfil_confirmarSaida()" class="flex-1 py-3 rounded-xl bg-red-600 text-white font-semibold text-sm hover:bg-red-700 transition-colors active:scale-95">Sair</button>' +
+            '</div>' +
+          '</div>';
+          abrirModal(html, 'Confirmar Saída');
+        }
+
+        function perfil_confirmarSaida() {
+          fecharModal();
+          toast('Você saiu da sua conta', 'info');
+        }
+
+        function perfil_addRota() {
+          mostrarTela('nova-rota');
+        }
+
+        function perfil_abrirIdioma() {
+          var html = '<div class="space-y-2">' +
+            '<button onclick="perfil_selecionarIdioma(this, \"Português (Brasil)\")" class="w-full flex items-center gap-3 p-3 rounded-xl bg-marca-50 border-2 border-marca-200">' +
+              '<span class="text-lg">🇧🇷</span><span class="text-sm font-semibold text-marca-900">Português (Brasil)</span><svg class="w-5 h-5 text-marca-500 ml-auto" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>' +
+            '</button>' +
+            '<button onclick="perfil_selecionarIdioma(this, \"Español\")" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors">' +
+              '<span class="text-lg">🇪🇸</span><span class="text-sm font-semibold text-gray-700">Español</span>' +
+            '</button>' +
+            '<button onclick="perfil_selecionarIdioma(this, \"English\")" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors">' +
+              '<span class="text-lg">🇺🇸</span><span class="text-sm font-semibold text-gray-700">English</span>' +
+            '</button>' +
+          '</div>';
+          abrirModal(html, 'Idioma');
+        }
+
+        function perfil_selecionarIdioma(btn, idioma) {
+          document.getElementById('idioma-atual').textContent = idioma;
+          fecharModal();
+          toast('Idioma alterado para ' + idioma, 'ok');
+        }
+
+        function perfil_abrirMoeda() {
+          var html = '<div class="space-y-2">' +
+            '<button onclick="perfil_selecionarMoeda(this, \"Real (BRL)\", \"R$\")" class="w-full flex items-center gap-3 p-3 rounded-xl bg-marca-50 border-2 border-marca-200">' +
+              '<span class="text-lg font-bold text-green-700">R$</span><span class="text-sm font-semibold text-marca-900">Real (BRL)</span><svg class="w-5 h-5 text-marca-500 ml-auto" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>' +
+            '</button>' +
+            '<button onclick="perfil_selecionarMoeda(this, \"Dólar (USD)\", \"US$\")" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors">' +
+              '<span class="text-lg font-bold text-green-700">US$</span><span class="text-sm font-semibold text-gray-700">Dólar (USD)</span>' +
+            '</button>' +
+            '<button onclick="perfil_selecionarMoeda(this, \"Euro (EUR)\", \"€\")" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors">' +
+              '<span class="text-lg font-bold text-green-700">€</span><span class="text-sm font-semibold text-gray-700">Euro (EUR)</span>' +
+            '</button>' +
+          '</div>';
+          abrirModal(html, 'Moeda');
+        }
+
+        function perfil_selecionarMoeda(btn, moeda, simbolo) {
+          document.getElementById('moeda-atual').textContent = moeda;
+          fecharModal();
+          toast('Moeda alterada para ' + moeda, 'ok');
+        }
+
+        function perfil_abrirFormatoData() {
+          var html = '<div class="space-y-2">' +
+            '<button onclick="perfil_selecionarData(this, \"DD/MM/AAAA\")" class="w-full flex items-center gap-3 p-3 rounded-xl bg-marca-50 border-2 border-marca-200">' +
+              '<span class="text-sm font-mono font-bold text-marca-900">15/01/2025</span><span class="text-xs text-gray-400">DD/MM/AAAA</span><svg class="w-5 h-5 text-marca-500 ml-auto" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>' +
+            '</button>' +
+            '<button onclick="perfil_selecionarData(this, \"MM/DD/AAAA\")" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors">' +
+              '<span class="text-sm font-mono font-bold text-gray-700">01/15/2025</span><span class="text-xs text-gray-400">MM/DD/AAAA</span>' +
+            '</button>' +
+            '<button onclick="perfil_selecionarData(this, \"AAAA-MM-DD\")" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors">' +
+              '<span class="text-sm font-mono font-bold text-gray-700">2025-01-15</span><span class="text-xs text-gray-400">AAAA-MM-DD</span>' +
+            '</button>' +
+          '</div>';
+          abrirModal(html, 'Formato de Data');
+        }
+
+        function perfil_selecionarData(btn, formato) {
+          document.getElementById('data-format-atual').textContent = formato;
+          fecharModal();
+          toast('Formato de data alterado para ' + formato, 'ok');
+        }
+
+        function perfil_termos() {
+          var html = '<div class="space-y-3 text-sm text-gray-600 leading-relaxed">' +
+            '<p><strong class="text-marca-900">Termos de Uso — RoteiroExpress</strong></p>' +
+            '<p>Bem-vindo ao RoteiroExpress. Ao utilizar este aplicativo, você concorda com os seguintes termos:</p>' +
+            '<p><strong class="text-marca-900">1. Uso do serviço</strong><br>O aplicativo destina-se ao gerenciamento de rotas, recebimentos e despesas. É responsabilidade do usuário manter a veracidade dos dados inseridos.</p>' +
+            '<p><strong class="text-marca-900">2. Privacidade</strong><br>Seus dados financeiros e de rota são armazenados de forma segura. Não compartilhamos informações com terceiros.</p>' +
+            '<p><strong class="text-marca-900">3. Limitações</strong><br>Os relatórios e cálculos são fornecidos como referência. Consulte um contador para fins fiscais oficiais.</p>' +
+            '<p class="text-xs text-gray-400 mt-4">Última atualização: Janeiro de 2025</p>' +
+          '</div>';
+          abrirModal(html, 'Termos de Uso');
+        }
+
+        function perfil_privacidade() {
+          var html = '<div class="space-y-3 text-sm text-gray-600 leading-relaxed">' +
+            '<p><strong class="text-marca-900">Política de Privacidade</strong></p>' +
+            '<p>Levamos sua privacidade a sério. Esta política descreve como coletamos, usamos e protegemos seus dados.</p>' +
+            '<p><strong class="text-marca-900">Dados coletados:</strong></p>' +
+            '<ul class="list-disc list-inside space-y-1 text-gray-500">' +
+              '<li>Informações de perfil (nome, telefone, e-mail)</li>' +
+              '<li>Dados de rotas, clientes e recebimentos</li>' +
+              '<li>Registros de despesas</li>' +
+            '</ul>' +
+            '<p><strong class="text-marca-900">Seus direitos:</strong> Você pode solicitar a exclusão ou exportação dos seus dados a qualquer momento pelo suporte.</p>' +
+          '</div>';
+          abrirModal(html, 'Política de Privacidade');
+        }
+
+        function perfil_suporte() {
+          var html = '<div class="space-y-4">' +
+            '<div class="flex items-center gap-3 p-3 bg-marca-50 rounded-xl">' +
+              '<div class="w-10 h-10 rounded-full bg-marca-200 flex items-center justify-center text-marca-700">💬</div>' +
+              '<div><p class="text-sm font-semibold text-marca-900">Chat de Suporte</p><p class="text-xs text-gray-400">Seg-Sex, 08h-18h</p></div>' +
+            '</div>' +
+            '<div class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">' +
+              '<div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-700">📧</div>' +
+              '<div><p class="text-sm font-semibold text-marca-900">E-mail</p><p class="text-xs text-gray-400">suporte@roteiroexpress.com.br</p></div>' +
+            '</div>' +
+            '<div class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">' +
+              '<div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-700">📞</div>' +
+              '<div><p class="text-sm font-semibold text-marca-900">Telefone</p><p class="text-xs text-gray-400">(11) 3456-7890</p></div>' +
+            '</div>' +
+          '</div>';
+          abrirModal(html, 'Central de Ajuda');
+        }
+
+        // Inicializar
+        perfil_renderRecebimentos();
+      </script>
+    </section>
+
     <!-- TELAS -->
 
     </main>
