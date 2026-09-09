@@ -1660,6 +1660,564 @@ if (document.querySelector('[data-tela="painel"]')) painel_init();
   </script>
 </section>
 
+    <section data-tela="relatorios" class="hidden">
+  <div class="px-4 py-4 space-y-4 animate-screen-in">
+    <div class="flex items-center justify-between">
+      <div>
+        <h1 class="font-display text-xl font-bold text-marca-900">Relatórios</h1>
+        <p class="text-xs text-gray-500 mt-0.5 mt-1">Visão geral do seu negócio</p>
+      </div>
+      <button onclick="relatorios_abrirAcoes()" class="w-9 h-9 flex items-center justify-center rounded-xl bg-marca-50 text-marca-700 active:scale-95 transition-all hover:bg-marca-100">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="6" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/><circle cx="12" cy="18" r="1.5" fill="currentColor"/></svg>
+      </button>
+    </div>
+
+    <div class="bg-white rounded-2xl p-1 shadow-sm border border-gray-100">
+      <div class="grid grid-cols-4 gap-0.5" id="filtroPeriodo">
+        <button onclick="relatorios_setPeriodo('hoje')" data-periodo="hoje" class="rel-periodo-btn text-xs font-semibold py-2 rounded-xl transition-all active:scale-95">Hoje</button>
+        <button onclick="relatorios_setPeriodo('semana')" data-periodo="semana" class="rel-periodo-btn text-xs font-semibold py-2 rounded-xl transition-all active:scale-95 bg-marca-700 text-white">Semana</button>
+        <button onclick="relatorios_setPeriodo('mes')" data-periodo="mes" class="rel-periodo-btn text-xs font-semibold py-2 rounded-xl transition-all active:scale-95">Mês</button>
+        <button onclick="relatorios_setPeriodo('custom')" data-periodo="custom" class="rel-periodo-btn text-xs font-semibold py-2 rounded-xl transition-all active:scale-95">Custom</button>
+      </div>
+    </div>
+
+    <div id="filtroCustom" class="hidden bg-white rounded-2xl p-4 shadow-sm border border-gray-100 space-y-3">
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="text-xs font-semibold text-gray-500 mb-1 block">De</label>
+          <input type="date" id="dataDe" class="w-full text-sm border border-gray-200 rounded-xl px-3 py-2.5 focus:ring-2 focus:ring-marca-500 focus:border-marca-500 outline-none transition-all" value="2025-01-13">
+        </div>
+        <div>
+          <label class="text-xs font-semibold text-gray-500 mb-1 block">Até</label>
+          <input type="date" id="dataAte" class="w-full text-sm border border-gray-200 rounded-xl px-3 py-2.5 focus:ring-2 focus:ring-marca-500 focus:border-marca-500 outline-none transition-all" value="2025-01-19">
+        </div>
+      </div>
+      <button onclick="relatorios_aplicarCustom()" class="w-full bg-marca-700 text-white text-sm font-semibold py-2.5 rounded-xl active:scale-95 transition-all hover:bg-marca-800">Aplicar filtro</button>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3" id="kpiCards">
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+        <div class="flex items-center justify-between mb-2">
+          <div class="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          </div>
+          <span class="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">+12.5%</span>
+        </div>
+        <p class="text-xs text-gray-500 mb-0.5">Total Recebido</p>
+        <p class="font-display font-bold text-lg text-marca-900" id="kpiRecebido">R$ 4.850,00</p>
+      </div>
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+        <div class="flex items-center justify-between mb-2">
+          <div class="w-8 h-8 rounded-lg bg-red-50 flex items-center justify-center">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>
+          </div>
+          <span class="text-xs font-semibold text-red-600 bg-red-50 px-2 py-0.5 rounded-full">+3.2%</span>
+        </div>
+        <p class="text-xs text-gray-500 mb-0.5">Total Despesas</p>
+        <p class="font-display font-bold text-lg text-marca-900" id="kpiDespesas">R$ 1.240,00</p>
+      </div>
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+        <div class="flex items-center justify-between mb-2">
+          <div class="w-8 h-8 rounded-lg bg-marca-50 flex items-center justify-center">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <span class="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">+8.7%</span>
+        </div>
+        <p class="text-xs text-gray-500 mb-0.5">Saldo Líquido</p>
+        <p class="font-display font-bold text-lg text-emerald-600" id="kpiSaldo">R$ 3.610,00</p>
+      </div>
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+        <div class="flex items-center justify-between mb-2">
+          <div class="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <span class="text-xs font-semibold text-gray-500 bg-gray-50 px-2 py-0.5 rounded-full">+2</span>
+        </div>
+        <p class="text-xs text-gray-500 mb-0.5">Clientes Atendidos</p>
+        <p class="font-display font-bold text-lg text-marca-900" id="kpiClientes">18</p>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+      <div class="flex items-center justify-between p-4 pb-2">
+        <div>
+          <h3 class="font-display font-bold text-sm text-marca-900">Recebimentos por Forma</h3>
+          <p class="text-xs text-gray-400 mt-0.5">Comparativo do período</p>
+        </div>
+        <div class="flex gap-3 text-xs">
+          <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>Dinheiro</span>
+          <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-marca-600"></span>Pix</span>
+          <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>Misto</span>
+        </div>
+      </div>
+      <div class="px-4 pb-2 pt-2">
+        <svg id="graficoBarras" viewBox="0 0 320 160" class="w-full" style="height:160px">
+          <line x1="0" y1="140" x2="320" y2="140" stroke="#E5E7EB" stroke-width="1"/>
+          <line x1="0" y1="105" x2="320" y2="105" stroke="#F3F4F6" stroke-width="0.5" stroke-dasharray="4"/>
+          <line x1="0" y1="70" x2="320" y2="70" stroke="#F3F4F6" stroke-width="0.5" stroke-dasharray="4"/>
+          <line x1="0" y1="35" x2="320" y2="35" stroke="#F3F4F6" stroke-width="0.5" stroke-dasharray="4"/>
+          <text x="4" y="144" font-size="8" fill="#9CA3AF" font-family="system-ui">0</text>
+          <text x="4" y="109" font-size="8" fill="#9CA3AF" font-family="system-ui">1k</text>
+          <text x="4" y="74" font-size="8" fill="#9CA3AF" font-family="system-ui">2k</text>
+          <text x="4" y="39" font-size="8" fill="#9CA3AF" font-family="system-ui">3k</text>
+          <text x="4" y="8" font-size="8" fill="#9CA3AF" font-family="system-ui">4k</text>
+          <g transform="translate(44,0)">
+            <rect x="0" y="90" width="18" height="50" rx="3" fill="#059669" class="bar-anim"><animate attributeName="height" from="0" to="50" dur="0.6s" fill="freeze"/><animate attributeName="y" from="140" to="90" dur="0.6s" fill="freeze"/></rect>
+            <rect x="24" y="60" width="18" height="80" rx="3" fill="#2563EB" class="bar-anim"><animate attributeName="height" from="0" to="80" dur="0.6s" begin="0.1s" fill="freeze"/><animate attributeName="y" from="140" to="60" dur="0.6s" begin="0.1s" fill="freeze"/></rect>
+            <rect x="48" y="110" width="18" height="30" rx="3" fill="#D97706" class="bar-anim"><animate attributeName="height" from="0" to="30" dur="0.6s" begin="0.2s" fill="freeze"/><animate attributeName="y" from="140" to="110" dur="0.6s" begin="0.2s" fill="freeze"/></rect>
+            <text x="9" y="150" font-size="8" fill="#6B7280" font-family="system-ui" text-anchor="middle">Seg</text>
+          </g>
+          <g transform="translate(132,0)">
+            <rect x="0" y="80" width="18" height="60" rx="3" fill="#059669" class="bar-anim"><animate attributeName="height" from="0" to="60" dur="0.6s" begin="0.15s" fill="freeze"/><animate attributeName="y" from="140" to="80" dur="0.6s" begin="0.15s" fill="freeze"/></rect>
+            <rect x="24" y="50" width="18" height="90" rx="3" fill="#2563EB" class="bar-anim"><animate attributeName="height" from="0" to="90" dur="0.6s" begin="0.25s" fill="freeze"/><animate attributeName="y" from="140" to="50" dur="0.6s" begin="0.25s" fill="freeze"/></rect>
+            <rect x="48" y="100" width="18" height="40" rx="3" fill="#D97706" class="bar-anim"><animate attributeName="height" from="0" to="40" dur="0.6s" begin="0.35s" fill="freeze"/><animate attributeName="y" from="140" to="100" dur="0.6s" begin="0.35s" fill="freeze"/></rect>
+            <text x="9" y="150" font-size="8" fill="#6B7280" font-family="system-ui" text-anchor="middle">Ter</text>
+          </g>
+          <g transform="translate(220,0)">
+            <rect x="0" y="70" width="18" height="70" rx="3" fill="#059669" class="bar-anim"><animate attributeName="height" from="0" to="70" dur="0.6s" begin="0.2s" fill="freeze"/><animate attributeName="y" from="140" to="70" dur="0.6s" begin="0.2s" fill="freeze"/></rect>
+            <rect x="24" y="45" width="18" height="95" rx="3" fill="#2563EB" class="bar-anim"><animate attributeName="height" from="0" to="95" dur="0.6s" begin="0.3s" fill="freeze"/><animate attributeName="y" from="140" to="45" dur="0.6s" begin="0.3s" fill="freeze"/></rect>
+            <rect x="48" y="95" width="18" height="45" rx="3" fill="#D97706" class="bar-anim"><animate attributeName="height" from="0" to="45" dur="0.6s" begin="0.4s" fill="freeze"/><animate attributeName="y" from="140" to="95" dur="0.6s" begin="0.4s" fill="freeze"/></rect>
+            <text x="9" y="150" font-size="8" fill="#6B7280" font-family="system-ui" text-anchor="middle">Qua</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <div>
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="font-display font-bold text-sm text-marca-900">Transações Recentes</h3>
+        <button onclick="relatorios_verTodas()" class="text-xs font-semibold text-marca-600 hover:text-marca-800 transition-colors">Ver todas</button>
+      </div>
+      <div class="relative mb-3">
+        <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="buscaTransacoes" oninput="relatorios_buscar(this.value)" placeholder="Buscar transação..." class="w-full text-sm border border-gray-200 rounded-xl pl-9 pr-4 py-2.5 focus:ring-2 focus:ring-marca-500 focus:border-marca-500 outline-none transition-all bg-white">
+      </div>
+      <div id="listaTransacoes" class="space-y-2">
+      </div>
+      <div id="vazioBusca" class="hidden text-center py-8">
+        <div class="w-14 h-14 mx-auto rounded-full bg-gray-50 flex items-center justify-center mb-3">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        </div>
+        <p class="text-sm text-gray-500">Nenhuma transação encontrada</p>
+        <p class="text-xs text-gray-400 mt-1">Tente outro termo ou filtro</p>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+      <h3 class="font-display font-bold text-sm text-marca-900 mb-3">Resumo Rápido</h3>
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="text-xs text-gray-500">Ticket médio</span>
+          <span class="text-sm font-semibold text-marca-900">R$ 269,44</span>
+        </div>
+        <div class="w-full bg-gray-100 rounded-full h-1.5"><div class="bg-marca-500 h-1.5 rounded-full" style="width:68%"></div></div>
+        <div class="flex items-center justify-between">
+          <span class="text-xs text-gray-500">Recebido em Pix</span>
+          <span class="text-sm font-semibold text-marca-700">62%</span>
+        </div>
+        <div class="w-full bg-gray-100 rounded-full h-1.5"><div class="bg-marca-600 h-1.5 rounded-full" style="width:62%"></div></div>
+        <div class="flex items-center justify-between">
+          <span class="text-xs text-gray-500">Recebido em Dinheiro</span>
+          <span class="text-sm font-semibold text-emerald-600">28%</span>
+        </div>
+        <div class="w-full bg-gray-100 rounded-full h-1.5"><div class="bg-emerald-500 h-1.5 rounded-full" style="width:28%"></div></div>
+        <div class="flex items-center justify-between">
+          <span class="text-xs text-gray-500">Recebido Misto</span>
+          <span class="text-sm font-semibold text-amber-600">10%</span>
+        </div>
+        <div class="w-full bg-gray-100 rounded-full h-1.5"><div class="bg-amber-500 h-1.5 rounded-full" style="width:10%"></div></div>
+      </div>
+    </div>
+
+    <div class="space-y-2 pb-2">
+      <button onclick="relatorios_whatsapp()" class="w-full bg-green-600 text-white font-semibold text-sm py-3.5 rounded-2xl flex items-center justify-center gap-2 active:scale-95 transition-all hover:bg-green-700 shadow-sm">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Enviar no WhatsApp
+      </button>
+      <div class="grid grid-cols-2 gap-2">
+        <button onclick="relatorios_exportarPDF()" class="bg-marca-700 text-white font-semibold text-xs py-3 rounded-xl flex items-center justify-center gap-2 active:scale-95 transition-all hover:bg-marca-800 shadow-sm">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+          Exportar PDF
+        </button>
+        <button onclick="relatorios_compartilhar()" class="bg-white text-marca-700 border border-marca-200 font-semibold text-xs py-3 rounded-xl flex items-center justify-center gap-2 active:scale-95 transition-all hover:bg-marca-50 shadow-sm">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          Compartilhar
+        </button>
+      </div>
+    </div>
+    <div class="h-4"></div>
+  </div>
+</section>
+
+<script>
+(function(){
+  const dados = [
+    {id:1,tipo:'recebimento',cliente:'Carlos Mendes',valor:450.00,forma:'Pix',data:'2025-01-19',rota:'Campinas → São Paulo',obs:'Pagamento integral'},
+    {id:2,tipo:'despesa',cliente:'Posto Shell',valor:220.00,forma:'',categoria:'Combustível',data:'2025-01-19',obs:'Abastecimento van'},
+    {id:3,tipo:'recebimento',cliente:'Ana Beatriz',valor:320.00,forma:'Dinheiro',data:'2025-01-18',rota:'Sorocaba → São Paulo',obs:'Pagamento parcial'},
+    {id:4,tipo:'despesa',cliente:'Hotel Central',valor:380.00,forma:'',categoria:'Hospedagem',data:'2025-01-18',obs:'Diária hospedagem'},
+    {id:5,tipo:'recebimento',cliente:'João Pedro',valor:680.00,forma:'Misto',data:'2025-01-17',rota:'São Paulo → Campinas',obs:'Pix R$400 + Dinheiro R$280'},
+    {id:6,tipo:'despesa',cliente:'Restaurante Sabor',valor:85.50,forma:'',categoria:'Alimentação',data:'2025-01-17',obs:'Almoço equipe'},
+    {id:7,tipo:'recebimento',cliente:'Fernanda Lima',valor:550.00,forma:'Pix',data:'2025-01-16',rota:'Santos → São Paulo',obs:'Pagamento integral'},
+    {id:8,tipo:'despesa',cliente:'Posto Ipiranga',valor:195.00,forma:'',categoria:'Combustível',data:'2025-01-16',obs:'Abastecimento carro'},
+    {id:9,tipo:'recebimento',cliente:'Roberto Silva',valor:720.00,forma:'Dinheiro',data:'2025-01-15',rota:'Ribeirão → São Paulo',obs:'Pagamento com troco'},
+    {id:10,tipo:'despesa',cliente:'Hotel Premier',valor:420.00,forma:'',categoria:'Hospedagem',data:'2025-01-15',obs:'2 diárias'}
+  ];
+
+  const contatosWhatsApp = [
+    {id:1,nome:'Roberto Dias',tel:'(11) 98765-4321',role:'Gerente'},
+    {id:2,nome:'Marina Costa',tel:'(11) 91234-5678',role:'Financeiro'},
+    {id:3,nome:'Paulo Henrique',tel:'(11) 99876-5432',role:'Diretor'},
+    {id:4,nome:'Carla Mendes',tel:'(11) 97654-3210',role:'Operações'}
+  ];
+
+  const contadores = {hoje:{recebido:780,despesas:95,saldo:685,clientes:3},semana:{recebido:4850,despesas:1240,saldo:3610,clientes:18},mes:{recebido:18750,despesas:5680,saldo:13070,clientes:72}};
+
+  function formatarData(d){
+    const parts = d.split('-');
+    return parts[2]+'/'+parts[1]+'/'+parts[0];
+  }
+
+  function getIniciais(nome){
+    const p = nome.split(' ');
+    return (p[0][0]+(p.length>1?p[p.length-1][0]:'')).toUpperCase();
+  }
+
+  function getCorAvatar(nome){
+    const cores = ['#1E3A5F','#2563EB','#059669','#D97706','#7C3AED','#DC2626','#0891B2','#BE185D'];
+    let h=0; for(let i=0;i<nome.length;i++) h=nome.charCodeAt(i)+((h<<5)-h);
+    return cores[Math.abs(h)%cores.length];
+  }
+
+  function renderTransacoes(lista){
+    const container = document.getElementById('listaTransacoes');
+    const vazio = document.getElementById('vazioBusca');
+    container.innerHTML='';
+    if(lista.length===0){container.classList.add('hidden');vazio.classList.remove('hidden');return;}
+    vazio.classList.add('hidden');container.classList.remove('hidden');
+    lista.forEach(function(t){
+      const isRec = t.tipo==='recebimento';
+      const corBadge = isRec ? (t.forma==='Pix'?'bg-marca-100 text-marca-700':t.forma==='Dinheiro'?'bg-emerald-100 text-emerald-700':'bg-amber-100 text-amber-700') : 'bg-gray-100 text-gray-600';
+      const badgeText = isRec ? t.forma : t.categoria;
+      const sinal = isRec ? '+' : '-';
+      const corValor = isRec ? 'text-emerald-600' : 'text-red-500';
+      const corBarra = isRec ? 'bg-emerald-400' : 'bg-red-400';
+      const item = document.createElement('div');
+      item.className='bg-white rounded-xl p-3 shadow-sm border border-gray-100 flex items-center gap-3 active:scale-[0.98] transition-all cursor-pointer';
+      item.setAttribute('onclick','relatorios_abrirDetalhe('+t.id+')');
+      item.innerHTML=
+        '<div class="w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0" style="background:'+getCorAvatar(t.cliente)+'">'+getIniciais(t.cliente)+'</div>'+
+        '<div class="flex-1 min-w-0">'+
+          '<div class="flex items-center justify-between">'+
+            '<p class="text-sm font-semibold text-marca-900 truncate">'+t.cliente+'</p>'+
+            '<p class="text-sm font-bold '+corValor+' flex-shrink-0 ml-2">'+sinal+' R$ '+t.valor.toFixed(2).replace('.',',')+'</p>'+
+          '</div>'+
+          '<div class="flex items-center justify-between mt-1">'+
+            '<p class="text-xs text-gray-400 truncate">'+(t.rota||t.obs||'')+'</p>'+
+          '</div>'+
+          '<div class="flex items-center gap-2 mt-1.5">'+
+            '<span class="text-[10px] text-gray-400">'+formatarData(t.data)+'</span>'+
+            '<span class="text-[10px] px-1.5 py-0.5 rounded-full font-semibold '+corBadge+'">'+badgeText+'</span>'+
+          '</div>'+
+        '</div>'+
+        '<div class="w-1 h-8 rounded-full '+corBarra+' flex-shrink-0"></div>';
+      container.appendChild(item);
+    });
+  }
+
+  window.relatorios_setPeriodo = function(p){
+    document.querySelectorAll('.rel-periodo-btn').forEach(function(b){
+      b.classList.remove('bg-marca-700','text-white');b.classList.add('text-gray-600','hover:bg-gray-50');
+    });
+    const ativo = document.querySelector('[data-periodo="'+p+'"]');
+    ativo.classList.add('bg-marca-700','text-white');ativo.classList.remove('text-gray-600','hover:bg-gray-50');
+    const custom = document.getElementById('filtroCustom');
+    if(p==='custom'){custom.classList.remove('hidden');}else{custom.classList.add('hidden');}
+    const dadosPeriodo = contadores[p] || contadores.semana;
+    document.getElementById('kpiRecebido').textContent = 'R$ '+dadosPeriodo.recebido.toFixed(2).replace('.',',');
+    document.getElementById('kpiDespesas').textContent = 'R$ '+dadosPeriodo.despesas.toFixed(2).replace('.',',');
+    document.getElementById('kpiSaldo').textContent = 'R$ '+dadosPeriodo.saldo.toFixed(2).replace('.',',');
+    document.getElementById('kpiClientes').textContent = dadosPeriodo.clientes;
+    const recebimentos = dados.filter(function(x){return x.tipo==='recebimento';});
+    const pixTotal = recebimentos.filter(function(x){return x.forma==='Pix';}).reduce(function(s,x){return s+x.valor;},0);
+    const dinTotal = recebimentos.filter(function(x){return x.forma==='Dinheiro';}).reduce(function(s,x){return s+x.valor;},0);
+    const mistoTotal = recebimentos.filter(function(x){return x.forma==='Misto';}).reduce(function(s,x){return s+x.valor;},0);
+    relatorios_animarGrafico(dinTotal,pixTotal,mistoTotal);
+    toast('Período atualizado','ok');
+  };
+
+  function relatorios_animarGrafico(din,pix,misto){
+    const max = Math.max(din,pix,misto,1);
+    const h = 110;
+    const g = document.getElementById('graficoBarras');
+    const oldG = g.innerHTML;
+    g.innerHTML='<line x1="0" y1="140" x2="320" y2="140" stroke="#E5E7EB" stroke-width="1"/><line x1="0" y1="105" x2="320" y2="105" stroke="#F3F4F6" stroke-width="0.5" stroke-dasharray="4"/><line x1="0" y1="70" x2="320" y2="70" stroke="#F3F4F6" stroke-width="0.5" stroke-dasharray="4"/><line x1="0" y1="35" x2="320" y2="35" stroke="#F3F4F6" stroke-width="0.5" stroke-dasharray="4"/><text x="4" y="144" font-size="8" fill="#9CA3AF" font-family="system-ui">0</text><text x="4" y="109" font-size="8" fill="#9CA3AF" font-family="system-ui">1k</text><text x="4" y="74" font-size="8" fill="#9CA3AF" font-family="system-ui">2k</text><text x="4" y="39" font-size="8" fill="#9CA3AF" font-family="system-ui">3k</text><text x="4" y="8" font-size="8" fill="#9CA3AF" font-family="system-ui">4k</text>';
+    const vals = [din,pix,misto];
+    const cores = ['#059669','#2563EB','#D97706'];
+    const labels = ['Dinheiro','Pix','Misto'];
+    const gap = 15;
+    const bw = 36;
+    const startX = 55;
+    vals.forEach(function(v,i){
+      const barH = Math.max(2,(v/max)*100);
+      const y = 130-barH;
+      const x = startX+i*(bw+gap);
+      g.innerHTML+='<rect x="'+x+'" y="140" width="'+bw+'" height="0" rx="4" fill="'+cores[i]+'"><animate attributeName="height" to="'+barH+'" dur="0.5s" fill="freeze"/><animate attributeName="y" to="'+y+'" dur="0.5s" fill="freeze"/></rect>';
+      g.innerHTML+='<text x="'+(x+bw/2)+'" y="152" font-size="8" fill="#6B7280" font-family="system-ui" text-anchor="middle">'+labels[i]+'</text>';
+      g.innerHTML+='<text x="'+(x+bw/2)+'" y="'+(y-6)+'" font-size="8" fill="#374151" font-family="system-ui" font-weight="bold" text-anchor="middle">R
+
+    </main>
+
+    <!-- ======= NAVEGAÇÃO INFERIOR ======= -->
+    <nav class="shrink-0 bg-white border-t border-slate-100 shadow-nav safe-area-bottom">
+      <div class="flex items-center justify-around py-1.5 px-1 max-w-[390px] mx-auto">
+
+        <button data-nav="painel" onclick="mostrarTela('painel')" class="nav-btn ativo flex flex-col items-center gap-0.5 py-1.5 px-2 rounded-xl" aria-label="Painel">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+          <span class="text-[10px] font-semibold leading-none">Painel</span>
+        </button>
+
+        <button data-nav="nova-rota" onclick="mostrarTela('nova-rota')" class="nav-btn flex flex-col items-center gap-0.5 py-1.5 px-2 rounded-xl" aria-label="Nova Rota">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span class="text-[10px] font-semibold leading-none">Rota</span>
+        </button>
+
+        <button data-nav="clientes" onclick="mostrarTela('clientes')" class="nav-btn flex flex-col items-center gap-0.5 py-1.5 px-2 rounded-xl" aria-label="Clientes">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span class="text-[10px] font-semibold leading-none">Clientes</span>
+        </button>
+
+        <button data-nav="recebimento" onclick="mostrarTela('recebimento')" class="nav-btn flex flex-col items-center gap-0.5 py-1.5 px-2 rounded-xl" aria-label="Recebimento">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          <span class="text-[10px] font-semibold leading-none">Recebim.</span>
+        </button>
+
+        <button data-nav="despesas" onclick="mostrarTela('despesas')" class="nav-btn flex flex-col items-center gap-0.5 py-1.5 px-2 rounded-xl" aria-label="Despesas">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          <span class="text-[10px] font-semibold leading-none">Despesas</span>
+        </button>
+
+        <button data-nav="relatorios" onclick="mostrarTela('relatorios')" class="nav-btn flex flex-col items-center gap-0.5 py-1.5 px-2 rounded-xl" aria-label="Relatórios">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+          <span class="text-[10px] font-semibold leading-none">Relatórios</span>
+        </button>
+
+        <button data-nav="perfil" onclick="mostrarTela('perfil')" class="nav-btn flex flex-col items-center gap-0.5 py-1.5 px-2 rounded-xl" aria-label="Perfil">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span class="text-[10px] font-semibold leading-none">Perfil</span>
+        </button>
+
+      </div>
+    </nav>
+  </div>
+
+  <!-- ======= TOASTS ======= -->
+  <div id="toasts" class="fixed top-4 left-1/2 -translate-x-1/2 z-[999] flex flex-col gap-2 pointer-events-none min-[450px]:left-[calc(50%-195px)]" style="width:min(390px,calc(100vw-32px))"></div>
+
+  <!-- ======= MODAL GENÉRICO ======= -->
+  <div id="modal-overlay" class="modal-overlay fixed inset-0 z-[998] hidden items-center justify-center p-6" onclick="fecharModal(event)">
+    <div id="modal-carta" class="modal-carta bg-white rounded-3xl w-full max-w-sm shadow-elevated max-h-[80vh] flex flex-col" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between p-5 pb-3">
+        <h3 id="modal-titulo" class="font-display font-700 text-marca-700 text-lg leading-tight"></h3>
+        <button onclick="fecharModal()" class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 transition-colors" aria-label="Fechar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div id="modal-corpo" class="px-5 pb-5 overflow-y-auto"></div>
+    </div>
+  </div>
+
+  <!-- ======= UTILITÁRIOS ======= -->
+  <script>
+    /* Formata valor para Real brasileiro */
+    function brl(valor) {
+      return 'R$ ' + Number(valor).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    /* Converte ISO (YYYY-MM-DD) para dd/mm/aaaa */
+    function dataBR(iso) {
+      if (!iso) return '—';
+      var p = iso.split('-');
+      return p[2] + '/' + p[1] + '/' + p[0];
+    }
+
+    /* Relógio da barra de status */
+    (function atualizarRelogio() {
+      var el = document.getElementById('relogio');
+      if (!el) return;
+      function tick() {
+        var d = new Date();
+        el.textContent = String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+      }
+      tick();
+      setInterval(tick, 30000);
+    })();
+
+    /* Toast */
+    function toast(mensagem, tipo) {
+      var container = document.getElementById('toasts');
+      var cores = { ok: 'bg-emerald-600', erro: 'bg-red-600', info: 'bg-marca-500' };
+      var icones = {
+        ok:    '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>',
+        erro:  '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>',
+        info:  '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>',
+      };
+      var div = document.createElement('div');
+      div.className = 'toast-entrando pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-2xl shadow-elevated text-white text-sm font-medium font-body';
+      var cor = cores[tipo] || cores.info;
+      div.classList.add(cor);
+      div.innerHTML = icones[tipo] + '<span>' + mensagem + '</span>';
+      container.appendChild(div);
+      setTimeout(function() {
+        div.classList.remove('toast-entrando');
+        div.classList.add('toast-saindo');
+        div.addEventListener('animationend', function() { div.remove(); });
+      }, 3000);
+    }
+
+    /* Modal */
+    function abrirModal(html, titulo) {
+      document.getElementById('modal-titulo').textContent = titulo || '';
+      document.getElementById('modal-corpo').innerHTML = html;
+      var overlay = document.getElementById('modal-overlay');
+      overlay.classList.remove('hidden');
+      overlay.classList.add('flex');
+    }
+    function fecharModal(e) {
+      if (e && e.target !== e.currentTarget) return;
+      var overlay = document.getElementById('modal-overlay');
+      overlay.classList.add('hidden');
+      overlay.classList.remove('flex');
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') fecharModal();
+    });
+  </script>
+
+  <!-- ======= ROTEADOR ======= -->
+  <script>
+    function mostrarTela(id) {
+      document.querySelectorAll('[data-tela]').forEach(function (s) {
+        s.classList.toggle('hidden', s.dataset.tela !== id);
+      });
+      document.querySelectorAll('[data-nav]').forEach(function (b) {
+        b.classList.toggle('ativo', b.dataset.nav === id);
+      });
+      window.scrollTo({ top: 0 });
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+      mostrarTela('painel');
+    });
+  </script>
+
+</body>
+</html>+(v/1000).toFixed(1)+'k</text>';
+    });
+  }
+
+  window.relatorios_buscar = function(termo){
+    const t = termo.toLowerCase().trim();
+    const filtrados = t ? dados.filter(function(x){return (x.cliente+' '+(x.rota||'')+' '+(x.obs||'')+' '+(x.categoria||'')+' '+(x.forma||'')).toLowerCase().includes(t);}) : dados;
+    renderTransacoes(filtrados);
+  };
+
+  window.relatorios_aplicarCustom = function(){
+    const de = document.getElementById('dataDe').value;
+    const ate = document.getElementById('dataAte').value;
+    if(!de||!ate){toast('Selecione as datas','erro');return;}
+    toast('Filtro aplicado: '+formatarData(de)+' a '+formatarData(ate),'ok');
+  };
+
+  window.relatorios_abrirDetalhe = function(id){
+    const t = dados.find(function(x){return x.id===id;});
+    if(!t)return;
+    const isRec = t.tipo==='recebimento';
+    const cor = isRec ? 'emerald' : 'red';
+    const sinal = isRec ? '+' : '-';
+    const formaStr = isRec ? '<div><span class="text-xs text-gray-500">Forma de pagamento</span><p class="text-sm font-semibold text-marca-900 mt-0.5">'+t.forma+'</p></div>' : '<div><span class="text-xs text-gray-500">Categoria</span><p class="text-sm font-semibold text-marca-900 mt-0.5">'+t.categoria+'</p></div>';
+    abrirModal(
+      '<div class="space-y-4">'+
+        '<div class="flex items-center gap-3">'+
+          '<div class="w-12 h-12 rounded-full flex items-center justify-center text-white text-sm font-bold" style="background:'+getCorAvatar(t.cliente)+'">'+getIniciais(t.cliente)+'</div>'+
+          '<div><p class="font-display font-bold text-marca-900">'+t.cliente+'</p><p class="text-xs text-gray-400">'+formatarData(t.data)+'</p></div>'+
+        '</div>'+
+        '<div class="bg-gray-50 rounded-xl p-4 text-center">'+
+          '<p class="text-xs text-gray-500 mb-1">'+ (isRec?'Valor recebido':'Valor da despesa') +'</p>'+
+          '<p class="font-display text-2xl font-bold text-'+cor+'-600">'+sinal+' R$ '+t.valor.toFixed(2).replace('.',',')+'</p>'+
+        '</div>'+
+        '<div class="space-y-3">'+formaStr+'<div><span class="text-xs text-gray-500">Observação</span><p class="text-sm text-marca-900 mt-0.5">'+(t.obs||'—')+'</p></div>'+(t.rota?'<div><span class="text-xs text-gray-500">Rota</span><p class="text-sm text-marca-900 mt-0.5">'+t.rota+'</p></div>':'')+'</div>'+
+        '<button onclick="fecharModal();mostrarTela(\''+(isRec?'recebimento':'despesas')+'\')" class="w-full bg-marca-700 text-white text-sm font-semibold py-3 rounded-xl active:scale-95 transition-all hover:bg-marca-800">'+(isRec?'Novo Recebimento':'Nova Despesa')+'</button>'+
+      '</div>',
+      'Detalhes da Transação'
+    );
+  };
+
+  window.relatorios_verTodas = function(){
+    toast('Exibindo todas as transações','info');
+  };
+
+  window.relatorios_abrirAcoes = function(){
+    abrirModal(
+      '<div class="space-y-2">'+
+        '<button onclick="fecharModal();relatorios_exportarPDF()" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors text-left">'+
+          '<div class="w-10 h-10 rounded-xl bg-marca-50 flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg></div>'+
+          '<div><p class="text-sm font-semibold text-marca-900">Exportar PDF</p><p class="text-xs text-gray-400">Relatório completo para impressão</p></div>'+
+        '</button>'+
+        '<button onclick="fecharModal();relatorios_compartilhar()" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors text-left">'+
+          '<div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></div>'+
+          '<div><p class="text-sm font-semibold text-marca-900">Compartilhar Imagem</p><p class="text-xs text-gray-400">Enviar como imagem</p></div>'+
+        '</button>'+
+        '<button onclick="fecharModal();relatorios_whatsapp()" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors text-left">'+
+          '<div class="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>'+
+          '<div><p class="text-sm font-semibold text-marca-900">Enviar no WhatsApp</p><p class="text-xs text-gray-400">Resumo formatado para contatos</p></div>'+
+        '</button>'+
+        '<button onclick="fecharModal()" class="w-full text-center text-sm text-gray-400 py-2 hover:text-gray-600 transition-colors">Cancelar</button>'+
+      '</div>',
+      'Ações do Relatório'
+    );
+  };
+
+  window.relatorios_whatsapp = function(){
+    const radios = contatosWhatsApp.map(function(c){
+      return '<label class="flex items-center gap-3 p-3 rounded-xl border border-gray-100 hover:bg-gray-50 cursor-pointer transition-colors"><input type="radio" name="waContato" value="'+c.id+'" class="accent-marca-600"><div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0" style="background:'+getCorAvatar(c.nome)+'">'+getIniciais(c.nome)+'</div><div class="flex-1"><p class="text-sm font-semibold text-marca-900">'+c.nome+'</p><p class="text-xs text-gray-400">'+c.tel+' · '+c.role+'</p></div></label>';
+    }).join('');
+    abrirModal(
+      '<div class="space-y-2">'+
+        '<p class="text-xs text-gray-500 mb-2">Selecione o contato para enviar o resumo:</p>'+
+        radios+
+        '<button onclick="relatorios_enviarWA()" class="w-full bg-green-600 text-white font-semibold text-sm py-3 rounded-xl mt-3 active:scale-95 transition-all hover:bg-green-700">Enviar Resumo</button>'+
+      '</div>',
+      'Enviar no WhatsApp'
+    );
+  };
+
+  window.relatorios_enviarWA = function(){
+    const sel = document.querySelector('input[name="waContato"]:checked');
+    if(!sel){toast('Selecione um contato','erro');return;}
+    const c = contatosWhatsApp.find(function(x){return x.id==sel.value;});
+    const msg = encodeURIComponent('*Resumo Financeiro - BlueCircuit*\n\n📊 Período: Semana (13/01 a 19/01)\n\n💰 Total Recebido: R$ 4.850,00\n💸 Total Despesas: R$ 1.240,00\n📈 Saldo Líquido: R$ 3.610,00\n👥 Clientes Atendidos: 18\n\n🏦 Recebimentos:\n• Pix: 62%\n• Dinheiro: 28%\n• Misto: 10%\n\nTicket médio: R$ 269,44\n\nEnviado pelo app BlueCircuit');
+    window.open('https://wa.me/5511'+c.tel.replace(/\D/g,'')+'?text='+msg,'_blank');
+    fecharModal();
+    toast('Resumo enviado para '+c.nome,'ok');
+  };
+
+  window.relatorios_exportarPDF = function(){
+    toast('Gerando PDF... Aguarde','info');
+    setTimeout(function(){toast('PDF gerado com sucesso!','ok');},1500);
+  };
+
+  window.relatorios_compartilhar = function(){
+    if(navigator.share){
+      navigator.share({title:'Resumo Financeiro - BlueCircuit',text:'Resumo: R$ 4.850,00 recebidos · R$ 1.240,00 despesas · Saldo: R$ 3.610,00',url:window.location.href}).then(function(){toast('Compartilhado!','ok');}).catch(function(){});
+    }else{
+      toast('Link copiado para a área de transferência','ok');
+    }
+  };
+
+  renderTransacoes(dados);
+})();
+</script>
+
     <!-- TELAS -->
 
     </main>
